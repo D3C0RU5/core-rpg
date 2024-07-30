@@ -12,6 +12,7 @@ type Input = {
 
 export class CreateGrid implements UseCase {
   constructor(private readonly gridRepository: IGridRepository) {}
+
   async execute(input: Input): Promise<GridSnapshot> {
     const { rows, columns } = input.size
     const size = Size.create(rows, columns)
