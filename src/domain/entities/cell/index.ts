@@ -1,5 +1,5 @@
-import { Character } from '../character'
-import { Position } from '../vo/position'
+import { Character, CharacterSnapshot } from '../character'
+import { Position } from '../../value-objects/position'
 
 export type Occupant = Character // | Monster | Npc | Item
 
@@ -12,12 +12,14 @@ export class Cell {
   // resource: Resource
 
   constructor(
+    private cellId: string,
     private walkable: boolean,
     private characters: Character[],
   ) {}
 
   static create(): Cell {
-    return new Cell(true, [])
+    const cellId = crypto.randomUUID()
+    return new Cell(cellId, true, [])
   }
 
   hasCharacter(character: Character): boolean {
@@ -44,4 +46,26 @@ export class Cell {
       )
     }
   }
+
+  getWalkable() {
+    return this.walkable
+  }
+
+  getCharacters() {
+    return this.characters
+  }
+
+  toSnapshot() {
+    return {
+      cellId: this.cellId,
+      walkable: this.walkable,
+      characters: this.characters.map(character => character.toSnapshot()),
+    }
+  }
+}
+
+export type CellSnapshot = {
+  cellId: string
+  walkable: boolean
+  characters: CharacterSnapshot[]
 }

@@ -1,35 +1,39 @@
-import { Cell } from '../cell'
+import { Cell, CellSnapshot } from '../cell'
 import { Character } from '../character'
-import { Position } from '../vo/position'
+import { Position } from '../../value-objects/position'
 import { CellNotExistsError } from './errors/cell-not-exists-error'
-
-type Size = {
-  rows: number
-  columns: number
-}
+import { Size, SizeSnapshot } from '../../value-objects/size'
 
 export class Grid {
   private size: Size
 
-  constructor(private cells: Cell[][]) {
+  constructor(
+    private readonly gridId: string,
+    private cells: Cell[][],
+  ) {
     this.size = this.calculateSize(cells)
   }
 
   static create(size: Size): Grid {
+    const gridId = crypto.randomUUID()
     const cells = Grid.initializeCells(size)
 
-    return new Grid(cells)
+    return new Grid(gridId, cells)
   }
 
   private static initializeCells(size: Size): Cell[][] {
-    const cells: Cell[][] = Array.from({ length: size.rows }, () =>
-      Array.from({ length: size.columns }, () => Cell.create()),
+    const cells: Cell[][] = Array.from({ length: size.getRows() }, () =>
+      Array.from({ length: size.getColumns() }, () => Cell.create()),
     )
     return cells
   }
 
   private calculateSize(cells: Cell[][]): Size {
-    return { columns: cells[0].length, rows: cells.length }
+    return new Size(cells[0].length, cells.length)
+  }
+
+  getId(): string {
+    return this.gridId
   }
 
   getSize(): Size {
@@ -46,8 +50,8 @@ export class Grid {
   }
 
   getCharacterCell(character: Character): Cell | null {
-    for (let row = 1; row <= this.getSize().rows; row++) {
-      for (let column = 1; column <= this.getSize().columns; column++) {
+    for (let row = 1; row <= this.getSize().getRows(); row++) {
+      for (let column = 1; column <= this.getSize().getColumns(); column++) {
         const cell = this.getCell(new Position(row, column))
         if (cell.hasCharacter(character)) return cell
       }
@@ -67,4 +71,18 @@ export class Grid {
       toCell.addCharacter(character)
     }
   }
+
+  toSnapshot() {
+    return {
+      gridId: this.getId(),
+      size: this.getSize().toSnapshot(),
+      cells: this.cells.map(row => row.map(cell => cell.toSnapshot())),
+    }
+  }
+}
+
+export type GridSnapshot = {
+  gridId: string
+  size: SizeSnapshot
+  cells: CellSnapshot[][]
 }

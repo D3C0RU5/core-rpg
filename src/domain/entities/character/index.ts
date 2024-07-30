@@ -19,6 +19,34 @@ export class Character {
   getId(): string {
     return this.characterId
   }
+
+  getHealth() {
+    return this.health
+  }
+
+  getMovimentation() {
+    return this.movimentation
+  }
+
+  getStrength() {
+    return this.strength
+  }
+
+  toSnapshot(): CharacterSnapshot {
+    return {
+      characterId: this.characterId,
+      health: this.health,
+      movimentation: this.movimentation,
+      strength: this.strength,
+    }
+  }
+}
+
+export type CharacterSnapshot = {
+  characterId: string
+  health: number
+  movimentation: number
+  strength: number
 }
 
 export class CharacterFactory {

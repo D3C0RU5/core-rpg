@@ -1,6 +1,6 @@
 import { CharacterFactory } from './domain/entities/character'
 import { Grid } from './domain/entities/grid'
-import { Position } from './domain/entities/vo/position'
+import { Position } from './domain/value-objects/position'
 
 // helpers
 function printGrid(grid: Grid) {
