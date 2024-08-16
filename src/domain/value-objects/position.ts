@@ -5,6 +5,8 @@ export class Position {
   ) {}
 
   static create(row: number, column: number) {
+    if (row < 0) throw Error('InvalidRowValue')
+    if (column < 0) throw Error('InvalidColumnValue')
     return new Position(row, column)
   }
 

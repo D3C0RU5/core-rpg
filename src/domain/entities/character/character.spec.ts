@@ -12,9 +12,9 @@ describe('Character testes', () => {
   })
 
   describe('recover unit test', () => {
-    it('Should recover grid instance', () => {
+    it('Return recovered instance', () => {
       // Assert
-      const character = new Character(100, 10, 10)
+      const character = new Character('characterId', 100, 10, 10)
 
       // Assert
       expect(character).toBeInstanceOf(Character)

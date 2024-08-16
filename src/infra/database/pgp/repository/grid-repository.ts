@@ -7,7 +7,7 @@ export class GridRepository implements IGridRepository {
 
   async createGrid(grid: Grid): Promise<void> {
     await this.connection.query(
-      'insert into rpg_core.grid (grid_id, rows, columns)',
+      'insert into grid (grid_id, rows, columns) values ($1, $2, $3)',
       [grid.getId(), grid.getSize().getRows(), grid.getSize().getColumns()],
     )
   }

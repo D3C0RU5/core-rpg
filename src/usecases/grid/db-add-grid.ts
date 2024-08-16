@@ -10,7 +10,7 @@ type Input = {
   }
 }
 
-export class CreateGrid implements UseCase {
+export class DbAddGrid implements UseCase {
   constructor(private readonly gridRepository: IGridRepository) {}
 
   async execute(input: Input): Promise<GridSnapshot> {
@@ -19,7 +19,6 @@ export class CreateGrid implements UseCase {
     const grid = Grid.create(size)
 
     await this.gridRepository.createGrid(grid)
-
     return grid.toSnapshot()
   }
 }

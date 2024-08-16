@@ -49,10 +49,20 @@ export type CharacterSnapshot = {
   strength: number
 }
 
-export class CharacterFactory {
-  static create(type: CharacterType) {
-    if (type === 'stub') return Character.create(100, 10, 10)
+export class StubFactory {
+  static create() {
+    return Character.create(100, 10, 10)
+  }
+}
 
-    throw new Error('')
+export class PlayerFactory {
+  static create() {
+    return Character.create(100, 10, 10)
+  }
+}
+
+export class MonsterFactory {
+  static create() {
+    return Character.create(500, 6, 15)
   }
 }

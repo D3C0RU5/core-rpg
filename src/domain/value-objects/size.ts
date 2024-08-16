@@ -4,8 +4,10 @@ export class Size {
     private readonly columns: number,
   ) {}
 
-  static create(row: number, column: number) {
-    return new Size(row, column)
+  static create(rows: number, columns: number) {
+    if (rows < 0) throw Error('InvalidRowValue')
+    if (columns < 0) throw Error('InvalidColumnValue')
+    return new Size(rows, columns)
   }
 
   getRows(): number {
