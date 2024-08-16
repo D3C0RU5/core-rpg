@@ -4,7 +4,7 @@ import { Controller } from '../../protocols/controller'
 import { HttpRequest, HttpResponse } from '../../protocols/http'
 
 export class AddGridController implements Controller {
-  constructor(private readonly AddGrid: DbAddGrid) {}
+  constructor(private readonly addGrid: DbAddGrid) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
@@ -15,7 +15,7 @@ export class AddGridController implements Controller {
       if (!columns) {
         return badRequest(new Error('Missing columns'))
       }
-      const gridSnapshot = await this.AddGrid.execute({
+      const gridSnapshot = await this.addGrid.execute({
         size: { rows, columns },
       })
 
