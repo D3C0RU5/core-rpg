@@ -4,14 +4,15 @@ import { Position } from '../../value-objects/position'
 export class Cell {
   constructor(
     private cellId: string,
+    private gridId: string,
     private position: Position,
     private walkable: boolean,
     private character: Character | null = null,
   ) {}
 
-  static create(position: Position, walkable: boolean): Cell {
+  static create(gridId: string, position: Position, walkable: boolean): Cell {
     const cellId = crypto.randomUUID()
-    return new Cell(cellId, position, walkable)
+    return new Cell(cellId, gridId, position, walkable)
   }
 
   occupied(): boolean {
