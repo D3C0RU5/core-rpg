@@ -6,13 +6,23 @@ export interface DatabaseConnection {
   close(): Promise<void>
 }
 
+let instance: PgPromiseAdapter
+
 export class PgPromiseAdapter implements DatabaseConnection {
   connection: any
 
-  constructor() {
+  private constructor() {
     this.connection = pgp()(
       'postgres://postgres:password@localhost:5432/rpg_core',
     )
+  }
+
+  static getInstanceConnection() {
+    if (!instance) {
+      instance = new PgPromiseAdapter()
+    }
+
+    return instance
   }
 
   query(statement: string, params: any) {

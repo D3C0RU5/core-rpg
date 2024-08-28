@@ -19,6 +19,7 @@ export class DbAddGrid implements UseCase {
     const grid = Grid.create(size)
 
     await this.gridRepository.create(grid)
+
     return grid.toSnapshot()
   }
 }

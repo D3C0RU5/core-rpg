@@ -45,10 +45,22 @@ export class Cell {
     return this.character
   }
 
+  getId() {
+    return this.cellId
+  }
+  getGridId() {
+    return this.gridId
+  }
+
+  getPosition() {
+    return this.position
+  }
+
   toSnapshot(): CellSnapshot {
     return {
       cellId: this.cellId,
       walkable: this.walkable,
+      position: this.position,
       character: this.character?.toSnapshot(),
     }
   }
@@ -57,5 +69,6 @@ export class Cell {
 export type CellSnapshot = {
   cellId: string
   walkable: boolean
+  position: Position
   character: CharacterSnapshot | undefined
 }
