@@ -10,7 +10,7 @@ export type Input = {
   }
 }
 
-export class DbAddGrid implements UseCase {
+export class DbCreateGridUseCase implements UseCase {
   constructor(private readonly gridRepository: IGridRepositoryCreate) {}
 
   async execute(input: Input): Promise<GridSnapshot> {

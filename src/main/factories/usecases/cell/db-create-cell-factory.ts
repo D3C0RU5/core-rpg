@@ -1,9 +1,9 @@
 import { GridRepository } from '../../../../infra/database/pgp/repository/grid-repository'
 import { PgPromiseAdapter } from '../../../../infra/database/pgp/DatabaseConnection'
-import { DbAddCell } from '../../../../usecases/cell/db-add-cell'
+import { DbCreateCellUseCase } from '../../../../usecases/cell/db-create-cell-use-case'
 import { CellRepository } from '../../../../infra/database/pgp/repository/cell-repository.ts'
 
-export const makeDbAddCell = (): DbAddCell => {
+export const makeDbAddCell = (): DbCreateCellUseCase => {
   const gridRepository = new GridRepository(
     PgPromiseAdapter.getInstanceConnection(),
   )
@@ -11,5 +11,5 @@ export const makeDbAddCell = (): DbAddCell => {
     PgPromiseAdapter.getInstanceConnection(),
   )
 
-  return new DbAddCell(gridRepository, cellRepository)
+  return new DbCreateCellUseCase(gridRepository, cellRepository)
 }

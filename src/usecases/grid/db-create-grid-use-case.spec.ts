@@ -1,7 +1,7 @@
 import { Grid } from '../../domain/entities/grid'
 import { Size } from '../../domain/value-objects/size'
 import { IGridRepositoryCreate } from '../protocols/grid/grid-repository-create'
-import { DbAddGrid, Input } from './db-add-grid'
+import { DbCreateGridUseCase, Input } from './db-create-grid-use-case'
 
 class StubGridRepository implements IGridRepositoryCreate {
   async create(grid: Grid): Promise<void> {}
@@ -9,11 +9,11 @@ class StubGridRepository implements IGridRepositoryCreate {
 
 type SutType = {
   createRepositoryStub: IGridRepositoryCreate
-  sut: DbAddGrid
+  sut: DbCreateGridUseCase
 }
 const makeSut = (): SutType => {
   const createRepositoryStub = new StubGridRepository()
-  const sut = new DbAddGrid(createRepositoryStub)
+  const sut = new DbCreateGridUseCase(createRepositoryStub)
   return {
     createRepositoryStub,
     sut,

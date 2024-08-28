@@ -1,10 +1,10 @@
-import { DbAddCell } from '../../../usecases/cell/db-add-cell'
+import { DbCreateCellUseCase } from '../../../usecases/cell/db-create-cell-use-case'
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 import { Controller } from '../../protocols/controller'
 import { HttpRequest, HttpResponse } from '../../protocols/http'
 
 export class CreateCellController implements Controller {
-  constructor(private readonly addCell: DbAddCell) {}
+  constructor(private readonly createCell: DbCreateCellUseCase) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
@@ -26,7 +26,7 @@ export class CreateCellController implements Controller {
         return badRequest(new Error('Missing position column'))
       }
 
-      const gridSnapshot = await this.addCell.execute({
+      const gridSnapshot = await this.createCell.execute({
         gridId,
         position,
         walkable: walkable || false,

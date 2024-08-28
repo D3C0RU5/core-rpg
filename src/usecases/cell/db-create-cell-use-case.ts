@@ -13,7 +13,7 @@ type Input = {
   walkable: boolean
 }
 
-export class DbAddCell implements UseCase {
+export class DbCreateCellUseCase implements UseCase {
   constructor(
     private readonly gridRepository: IGridRepositoryExists,
     private readonly cellRepository: ICellRepositoryCreate,

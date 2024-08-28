@@ -1,10 +1,10 @@
-import { DbAddGrid } from '../../../usecases/grid/db-add-grid'
+import { DbCreateGridUseCase } from '../../../usecases/grid/db-create-grid-use-case'
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 import { Controller } from '../../protocols/controller'
 import { HttpRequest, HttpResponse } from '../../protocols/http'
 
-export class AddGridController implements Controller {
-  constructor(private readonly addGrid: DbAddGrid) {}
+export class CreateGridController implements Controller {
+  constructor(private readonly createGrid: DbCreateGridUseCase) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
@@ -15,7 +15,7 @@ export class AddGridController implements Controller {
       if (!columns) {
         return badRequest(new Error('Missing columns'))
       }
-      const gridSnapshot = await this.addGrid.execute({
+      const gridSnapshot = await this.createGrid.execute({
         size: { rows, columns },
       })
 
