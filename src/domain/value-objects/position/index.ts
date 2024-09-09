@@ -1,3 +1,5 @@
+import { columnLessThanZeroError, rowLessThanZeroError } from './errors'
+
 export class Position {
   constructor(
     private readonly row: number,
@@ -5,8 +7,8 @@ export class Position {
   ) {}
 
   static create(row: number, column: number) {
-    if (row < 0) throw Error('InvalidRowValue')
-    if (column < 0) throw Error('InvalidColumnValue')
+    if (row < 0) throw rowLessThanZeroError(row)
+    if (column < 0) throw columnLessThanZeroError(column)
     return new Position(row, column)
   }
 

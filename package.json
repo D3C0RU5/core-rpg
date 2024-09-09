@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/main/server.ts"
+    "dev": "nodemon src/main/server.ts",
+    "unit:test": "npx jest -c ./jest-unit.config.js",
+    "test": "npx jest -c ./jest.config.js"
   },
   "keywords": [],
   "author": "",

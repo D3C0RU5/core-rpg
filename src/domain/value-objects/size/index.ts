@@ -1,3 +1,5 @@
+import { columnsLessThanZeroError, rowsLessThanZeroError } from './errors'
+
 export class Size {
   constructor(
     private readonly rows: number,
@@ -5,8 +7,8 @@ export class Size {
   ) {}
 
   static create(rows: number, columns: number) {
-    if (rows < 0) throw Error('InvalidRowValue')
-    if (columns < 0) throw Error('InvalidColumnValue')
+    if (rows < 0) throw rowsLessThanZeroError(rows)
+    if (columns < 0) throw columnsLessThanZeroError(columns)
     return new Size(rows, columns)
   }
 
