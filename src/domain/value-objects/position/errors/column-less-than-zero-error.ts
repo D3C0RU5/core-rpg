@@ -1,4 +1,4 @@
-import { InvalidValueError } from '../../../errors/InvalidValueError'
+import { InvalidValueError } from '../../../errors/invalid-value-error'
 
 export const columnLessThanZeroError = (columnValue: number) => {
   return new InvalidValueError(
