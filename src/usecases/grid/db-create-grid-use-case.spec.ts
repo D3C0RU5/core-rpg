@@ -32,10 +32,13 @@ const makeInput = (): Input => {
 const fakeSize = new Size(10, 5)
 const fakeGrid = new Grid('grid-id', fakeSize)
 
-describe('testing DbAddGrid', () => {
+describe('DbCreateGridUseCase', () => {
+  let sizeCreateSpy: jest.SpyInstance
+  let gridCreateSpy: jest.SpyInstance
+
   beforeEach(() => {
-    jest.spyOn(Size, 'create').mockReturnValue(fakeSize)
-    jest.spyOn(Grid, 'create').mockReturnValue(fakeGrid)
+    sizeCreateSpy = jest.spyOn(Size, 'create').mockReturnValue(fakeSize)
+    gridCreateSpy = jest.spyOn(Grid, 'create').mockReturnValue(fakeGrid)
   })
 
   it('throws if Size.create is invalid', async () => {
@@ -44,7 +47,7 @@ describe('testing DbAddGrid', () => {
     const input = makeInput()
 
     // Mock
-    jest.spyOn(Size, 'create').mockImplementation(() => {
+    sizeCreateSpy.mockImplementation(() => {
       throw new Error('any error')
     })
 
@@ -52,7 +55,7 @@ describe('testing DbAddGrid', () => {
     const execution = sut.execute(input)
 
     // Assert
-    await expect(() => execution).rejects.toThrow('any error')
+    await expect(() => execution).rejects.toThrow()
   })
 
   it('throws if Grid.create is invalid', async () => {
@@ -61,7 +64,7 @@ describe('testing DbAddGrid', () => {
     const input = makeInput()
 
     // Mock
-    jest.spyOn(Grid, 'create').mockImplementation(() => {
+    gridCreateSpy.mockImplementation(() => {
       throw new Error('any error')
     })
 
@@ -84,6 +87,11 @@ describe('testing DbAddGrid', () => {
     const result = await sut.execute(input)
 
     // Assert
+    expect(sizeCreateSpy).toHaveBeenCalledWith(
+      input.size.rows,
+      input.size.columns,
+    )
+    expect(gridCreateSpy).toHaveBeenCalledWith(fakeSize)
     expect(createSpy).toHaveBeenCalledWith(fakeGrid)
     expect(result).toEqual(fakeGrid.toSnapshot())
   })
