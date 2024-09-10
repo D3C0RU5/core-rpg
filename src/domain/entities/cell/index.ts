@@ -23,12 +23,10 @@ export class Cell {
     return this.walkable && !this.occupied()
   }
 
-  addCharacter(character: Character): boolean {
+  addCharacter(character: Character) {
     if (this.isWalkable()) {
       this.character = character
-      return true
     }
-    return false
   }
 
   removeCharacter(): void {
