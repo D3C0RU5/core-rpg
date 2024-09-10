@@ -48,6 +48,7 @@ export class Cell {
   getId() {
     return this.cellId
   }
+
   getGridId() {
     return this.gridId
   }
