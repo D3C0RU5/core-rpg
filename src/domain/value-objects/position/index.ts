@@ -19,4 +19,16 @@ export class Position {
   getColumnAsIndex(): number {
     return this.column - 1
   }
+
+  toSnapshot(): PositionSnapshot {
+    return {
+      row: this.row,
+      column: this.column,
+    }
+  }
+}
+
+export type PositionSnapshot = {
+  row: number
+  column: number
 }
