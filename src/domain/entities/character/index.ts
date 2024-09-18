@@ -2,18 +2,37 @@ import { randomUUID } from 'crypto'
 
 type CharacterType = 'player' | 'monster' | 'npc' | 'stub'
 
+type CharacterProps = {
+  characterId: string
+  health: number
+  movimentation: number
+  strength: number
+}
+
+export type CharacterSnapshot = {
+  characterId: string
+  health: number
+  movimentation: number
+  strength: number
+}
+
 export class Character {
-  constructor(
-    private characterId: string,
-    private health: number,
-    private movimentation: number,
-    private strength: number,
-  ) {}
+  private characterId: string
+  private health: number
+  private movimentation: number
+  private strength: number
+
+  constructor(props: CharacterProps) {
+    this.characterId = props.characterId
+    this.health = props.health
+    this.movimentation = props.movimentation
+    this.strength = props.strength
+  }
 
   static create(health: number, movimentation: number, strength: number) {
     const characterId = randomUUID()
 
-    return new Character(characterId, health, movimentation, strength)
+    return new Character({ characterId, health, movimentation, strength })
   }
 
   getId(): string {
@@ -40,13 +59,6 @@ export class Character {
       strength: this.strength,
     }
   }
-}
-
-export type CharacterSnapshot = {
-  characterId: string
-  health: number
-  movimentation: number
-  strength: number
 }
 
 export class StubFactory {

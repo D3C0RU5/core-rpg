@@ -1,41 +1,41 @@
-import { DbCreateCellUseCase } from '../../../usecases/cell/db-create-cell-use-case'
-import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
+import { ICreateCellUseCase } from '../../../domain/usecases/db-create-cell'
+import { handleError, ok } from '../../helpers/http/http-helper'
 import { Controller } from '../../protocols/controller'
 import { HttpRequest, HttpResponse } from '../../protocols/http'
+import { MissingProperyError } from '../errors/missing-property-error'
 
 export class CreateCellController implements Controller {
-  constructor(private readonly createCell: DbCreateCellUseCase) {}
+  constructor(private readonly createCell: ICreateCellUseCase) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { gridId, position, walkable } = httpRequest.body
 
       if (!gridId) {
-        return badRequest(new Error('Missing gridId'))
+        throw new MissingProperyError('body', 'gridId')
       }
 
       if (!position) {
-        return badRequest(new Error('Missing position'))
+        throw new MissingProperyError('body', 'position')
       }
 
       if (isNaN(Number(position.row))) {
-        return badRequest(new Error('Missing position row'))
+        throw new MissingProperyError('body', 'position.row')
       }
 
       if (isNaN(Number(position.column))) {
-        return badRequest(new Error('Missing position column'))
+        throw new MissingProperyError('body', 'position.column')
       }
 
-      const gridSnapshot = await this.createCell.execute({
+      const cellSnapshot = await this.createCell.execute({
         gridId,
         position,
         walkable: walkable || false,
       })
 
-      return ok({ gridSnapshot })
+      return ok(cellSnapshot)
     } catch (error) {
-      console.error(error)
-      return serverError(error)
+      return handleError(error)
     }
   }
 }

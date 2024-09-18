@@ -17,7 +17,12 @@ describe('Character unit test', () => {
   describe('getId method', () => {
     it('should return a correct snapshot of the character', () => {
       const uuid = randomUUID()
-      const character = new Character(uuid, 100, 10, 15)
+      const character = new Character({
+        characterId: uuid,
+        health: 100,
+        movimentation: 10,
+        strength: 15,
+      })
 
       expect(character.getId()).toBe(uuid)
     })
@@ -25,7 +30,12 @@ describe('Character unit test', () => {
 
   describe('getHealth method', () => {
     it('should return a correct snapshot of the character', () => {
-      const character = new Character('any-uuid', 100, 10, 15)
+      const character = new Character({
+        characterId: 'any-uuid',
+        health: 100,
+        movimentation: 10,
+        strength: 15,
+      })
 
       expect(character.getHealth()).toBe(100)
     })
@@ -33,7 +43,12 @@ describe('Character unit test', () => {
 
   describe('getMovimentation method', () => {
     it('should return a correct snapshot of the character', () => {
-      const character = new Character('any-uuid', 100, 10, 15)
+      const character = new Character({
+        characterId: 'any-uuid',
+        health: 100,
+        movimentation: 10,
+        strength: 15,
+      })
 
       expect(character.getMovimentation()).toBe(10)
     })
@@ -41,7 +56,12 @@ describe('Character unit test', () => {
 
   describe('getStrength method', () => {
     it('should return a correct snapshot of the character', () => {
-      const character = new Character('any-uuid', 100, 10, 15)
+      const character = new Character({
+        characterId: 'any-uuid',
+        health: 100,
+        movimentation: 10,
+        strength: 15,
+      })
 
       expect(character.getStrength()).toBe(15)
     })

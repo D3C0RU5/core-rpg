@@ -1,26 +1,22 @@
 import { Cell, CellSnapshot } from '../../../domain/entities/cell'
+import {
+  ICreateCellUseCase,
+  InputCreateCell,
+} from '../../../domain/usecases/db-create-cell'
 import { Position } from '../../../domain/value-objects/position'
 import { ICellRepositoryCreate } from '../../protocols/cell/cell-repository-create'
 import { IGridRepositoryExists } from '../../protocols/grid/grid-repository-exists'
-import { UseCase } from '../../usecase'
 import { gridNotFoundError } from './errors/grid-not-found-error'
 
-export type Input = {
-  gridId: string
-  position: {
-    row: number
-    column: number
-  }
-  walkable: boolean
-}
-
-export class DbCreateCellUseCase implements UseCase {
+export class DbCreateCellUseCase implements ICreateCellUseCase {
   constructor(
     private readonly gridRepository: IGridRepositoryExists,
     private readonly cellRepository: ICellRepositoryCreate,
   ) {}
 
-  async execute({ gridId, position, walkable }: Input): Promise<CellSnapshot> {
+  async execute(input: InputCreateCell): Promise<CellSnapshot> {
+    const { gridId, position, walkable } = input
+
     const gridExists = await this.gridRepository.exists(gridId)
 
     if (!gridExists) {

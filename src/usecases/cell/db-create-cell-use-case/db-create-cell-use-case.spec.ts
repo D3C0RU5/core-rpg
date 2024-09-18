@@ -1,9 +1,10 @@
 import { Cell } from '../../../domain/entities/cell'
 import { ICellRepositoryCreate } from '../../protocols/cell/cell-repository-create'
 import { IGridRepositoryExists } from '../../protocols/grid/grid-repository-exists'
-import { DbCreateCellUseCase, Input } from '.'
+import { DbCreateCellUseCase } from '.'
 import { gridNotFoundError } from './errors/grid-not-found-error'
 import { Position } from '../../../domain/value-objects/position'
+import { InputCreateCell } from '../../../domain/usecases/db-create-cell'
 
 class GridRepositoryStub implements IGridRepositoryExists {
   exists(gridId: string): Promise<boolean> {
@@ -35,7 +36,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-const makeInput = (): Input => ({
+const makeInput = (): InputCreateCell => ({
   gridId: 'fake-grid-id',
   position: {
     row: 10,
@@ -45,8 +46,13 @@ const makeInput = (): Input => ({
 })
 
 const fakeCell = () => {
-  const position = new Position(10, 20)
-  return new Cell('fake-cell-uuid', 'fake-grid-uuid', position, true)
+  const position = new Position({ column: 10, row: 20 })
+  return new Cell({
+    cellId: 'fake-cell-uuid',
+    gridId: 'fake-grid-uuid',
+    position,
+    walkable: true,
+  })
 }
 
 describe('DbCreateCellUseCase', () => {

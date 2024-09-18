@@ -3,7 +3,7 @@ import { Position } from '../../value-objects/position'
 import { Character } from '../character'
 
 describe('Cell', () => {
-  const position = new Position(1, 1)
+  const position = new Position({ column: 1, row: 1 })
 
   const createCell = () => Cell.create('grid-123', position, true)
   const createCharacter = () => Character.create(10, 10, 10)
@@ -11,7 +11,12 @@ describe('Cell', () => {
   describe('constructor', () => {
     it('should recover a cell with the correct attributes', () => {
       const cellId = crypto.randomUUID()
-      const cell = new Cell(cellId, 'grid-123', position, true)
+      const cell = new Cell({
+        cellId,
+        gridId: 'grid-123',
+        position,
+        walkable: true,
+      })
 
       expect(cell.getId()).toBe(cellId)
       expect(cell.getGridId()).toBe('grid-123')
@@ -89,13 +94,13 @@ describe('Cell', () => {
 
     it('should not add a character if the cell is already occupied', () => {
       const character = createCharacter()
-      const occupiedCell = new Cell(
-        'cell-id',
-        'grid-123',
+      const occupiedCell = new Cell({
+        cellId: 'cell-id',
+        gridId: 'grid-123',
         position,
-        false,
+        walkable: false,
         character,
-      )
+      })
 
       expect(occupiedCell.occupied()).toBe(true)
       occupiedCell.addCharacter(createCharacter())
@@ -107,13 +112,13 @@ describe('Cell', () => {
 
   describe('removeCharacter', () => {
     it('should remove a character from the cell', () => {
-      const cell = new Cell(
-        'cell-id',
-        'grid-123',
+      const cell = new Cell({
+        cellId: 'cell-id',
+        gridId: 'grid-123',
         position,
-        false,
-        createCharacter(),
-      )
+        walkable: false,
+        character: createCharacter(),
+      })
 
       expect(cell.occupied()).toBe(true)
       cell.removeCharacter()
@@ -147,13 +152,13 @@ describe('Cell', () => {
     })
 
     it('should return the character if there is one in the cell', () => {
-      const cell = new Cell(
-        'cell-id',
-        'grid-123',
+      const cell = new Cell({
+        cellId: 'cell-id',
+        gridId: 'grid-123',
         position,
-        false,
-        createCharacter(),
-      )
+        walkable: false,
+        character: createCharacter(),
+      })
 
       expect(cell.getCharacter()).toBeDefined()
     })

@@ -1,3 +1,3 @@
-export type UseCase = {
+export interface UseCase {
   execute(input: unknown): Promise<unknown>
 }

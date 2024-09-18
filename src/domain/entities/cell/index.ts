@@ -1,18 +1,32 @@
 import { Character, CharacterSnapshot } from '../character'
 import { Position } from '../../value-objects/position'
 
+export type CellProps = {
+  cellId: string
+  gridId: string
+  position: Position
+  walkable: boolean
+  character?: Character | null
+}
+
 export class Cell {
-  constructor(
-    private cellId: string,
-    private gridId: string,
-    private position: Position,
-    private walkable: boolean,
-    private character: Character | null = null,
-  ) {}
+  private cellId: string
+  private gridId: string
+  private position: Position
+  private walkable: boolean
+  private character?: Character | null
+
+  constructor(props: CellProps) {
+    this.cellId = props.cellId
+    this.gridId = props.gridId
+    this.position = props.position
+    this.walkable = props.walkable
+    this.character = props.character
+  }
 
   static create(gridId: string, position: Position, walkable: boolean): Cell {
     const cellId = crypto.randomUUID()
-    return new Cell(cellId, gridId, position, walkable)
+    return new Cell({ cellId, gridId, position, walkable })
   }
 
   occupied(): boolean {

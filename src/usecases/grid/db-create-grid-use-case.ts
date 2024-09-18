@@ -1,7 +1,7 @@
 import { Grid, GridSnapshot } from '../../domain/entities/grid'
 import { Size } from '../../domain/value-objects/size'
 import { IGridRepositoryCreate } from '../protocols/grid/grid-repository-create'
-import { UseCase } from '../usecase'
+import { UseCase } from '../../domain/usecases/usecase'
 
 export type Input = {
   size: {

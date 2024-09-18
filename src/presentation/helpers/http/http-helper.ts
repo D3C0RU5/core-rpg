@@ -1,3 +1,4 @@
+import { BaseError } from '../../../utils/errors/base-error'
 import { ServerError } from '../../errors/server-error'
 import { HttpResponse } from '../../protocols/http'
 
@@ -16,3 +17,18 @@ export const serverError = (error: unknown): HttpResponse => ({
   statusCode: 500,
   body: new ServerError(error instanceof Error ? error.stack : undefined),
 })
+
+export const handleError = (error: unknown): HttpResponse => {
+  if (error instanceof BaseError) {
+    return {
+      statusCode: 400,
+      body: { message: error.message, name: error.name },
+    }
+  } else {
+    console.error(error)
+    return {
+      statusCode: 500,
+      body: new ServerError(error instanceof Error ? error.stack : undefined),
+    }
+  }
+}
