@@ -5,6 +5,8 @@ import { DbCreateCellUseCase } from '.'
 import { gridNotFoundError } from './errors/grid-not-found-error'
 import { Position } from '../../../domain/value-objects/position'
 import { InputCreateCell } from '../../../domain/usecases/db-create-cell'
+import { ICellRepositoryAlreadyExistsInPosition } from '../../protocols/cell/cell-repository-already-exists-in-position'
+import { invalidGridInPositionError } from './errors/invalid-grid-in-position-error'
 
 class GridRepositoryStub implements IGridRepositoryExists {
   exists(gridId: string): Promise<boolean> {
@@ -12,9 +14,14 @@ class GridRepositoryStub implements IGridRepositoryExists {
   }
 }
 
-class CellRepositoryStub implements ICellRepositoryCreate {
+class CellRepositoryStub
+  implements ICellRepositoryCreate, ICellRepositoryAlreadyExistsInPosition
+{
   create(grid: Cell): Promise<void> {
     return Promise.resolve()
+  }
+  alreadyExistsInPosition(cell: Cell): Promise<boolean> {
+    return Promise.resolve(true)
   }
 }
 
@@ -108,6 +115,44 @@ describe('DbCreateCellUseCase', () => {
 
     // Assert
     await expect(act()).rejects.toThrow('any error')
+  })
+
+  it('Throw if cellRepository.alreadyExistsInPosition throws', async () => {
+    // Arrange
+    const { sut, cellRepositoryStub } = makeSut()
+    const input = makeInput()
+
+    // Arrange (mock)
+    jest
+      .spyOn(cellRepositoryStub, 'alreadyExistsInPosition')
+      .mockRejectedValueOnce(new Error('any error'))
+
+    // Act
+    const act = async () => await sut.execute(input)
+
+    // Assert
+    await expect(act()).rejects.toThrow('any error')
+  })
+
+  it('Throw if cellRepository.alreadyExistsInPosition returns false', async () => {
+    // Arrange
+    const { sut, cellRepositoryStub } = makeSut()
+    const input = makeInput()
+    const position = new Position({
+      row: input.position.row,
+      column: input.position.column,
+    })
+
+    // Arrange (mock)
+    jest
+      .spyOn(cellRepositoryStub, 'alreadyExistsInPosition')
+      .mockResolvedValueOnce(false)
+
+    // Act
+    const act = async () => await sut.execute(input)
+
+    // Assert
+    await expect(act()).rejects.toThrow(invalidGridInPositionError(position))
   })
 
   it('Throw if cellRepository.create throws', async () => {

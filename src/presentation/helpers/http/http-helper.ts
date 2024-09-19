@@ -31,7 +31,6 @@ export const handleError = (error: unknown): HttpResponse => {
       body: error.toSnapshot(),
     }
   } else {
-    console.error(error)
     return {
       statusCode: 500,
       body: new ServerError(error instanceof Error ? error.stack : undefined),
