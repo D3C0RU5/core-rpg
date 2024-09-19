@@ -1,7 +1,7 @@
-import { Cell } from '../../../../domain/entities/cell'
-import { ICellRepositoryAlreadyExistsInPosition } from '../../../../usecases/protocols/cell/cell-repository-already-exists-in-position'
-import { ICellRepositoryCreate } from '../../../../usecases/protocols/cell/cell-repository-create'
-import { DatabaseConnection } from '../DatabaseConnection'
+import { Cell } from '../../../core/domain/entities/cell'
+import { ICellRepositoryAlreadyExistsInPosition } from '../../../core/usecases/protocols/cell/cell-repository-already-exists-in-position'
+import { ICellRepositoryCreate } from '../../../core/usecases/protocols/cell/cell-repository-create'
+import { DatabaseConnection } from './DatabaseConnection'
 
 export class CellRepositoryPostgres
   implements ICellRepositoryCreate, ICellRepositoryAlreadyExistsInPosition

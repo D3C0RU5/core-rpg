@@ -1,5 +1,8 @@
 import { faker } from '@faker-js/faker'
-import { Position, PositionProps } from '../../domain/value-objects/position'
+import {
+  Position,
+  PositionProps,
+} from '../../core/domain/value-objects/position'
 
 export const createPosition = (data: Partial<PositionProps> = {}): Position => {
   return new Position({

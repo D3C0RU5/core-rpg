@@ -1,7 +1,7 @@
-import { Grid } from '../../../../domain/entities/grid'
-import { IGridRepositoryCreate } from '../../../../usecases/protocols/grid/grid-repository-create'
-import { IGridRepositoryExists } from '../../../../usecases/protocols/grid/grid-repository-exists'
-import { DatabaseConnection } from '../DatabaseConnection'
+import { Grid } from '../../../core/domain/entities/grid'
+import { IGridRepositoryCreate } from '../../../core/usecases/protocols/grid/grid-repository-create'
+import { IGridRepositoryExists } from '../../../core/usecases/protocols/grid/grid-repository-exists'
+import { DatabaseConnection } from './DatabaseConnection'
 
 export class GridRepositoryPostgres
   implements IGridRepositoryCreate, IGridRepositoryExists

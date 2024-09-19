@@ -1,4 +1,4 @@
-import { BaseError } from '../../utils/errors/base-error'
+import { BaseError } from './base-error'
 
 export class InvalidValueError extends BaseError {
   constructor(key: string, message: string, value: unknown) {

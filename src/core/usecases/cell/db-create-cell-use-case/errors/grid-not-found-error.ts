@@ -1,4 +1,4 @@
-import { NotFoundError } from '../../../errors/not-found-error'
+import { NotFoundError } from '../../../../../utils/errors/not-found-error'
 
 export const gridNotFoundError = (gridId: string) => {
   return new NotFoundError(

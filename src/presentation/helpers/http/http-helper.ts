@@ -1,5 +1,5 @@
-import { NotFoundError } from '../../../usecases/errors/not-found-error'
 import { BaseError } from '../../../utils/errors/base-error'
+import { NotFoundError } from '../../../utils/errors/not-found-error'
 import { ServerError } from '../../errors/server-error'
 import { HttpResponse } from '../../protocols/http'
 

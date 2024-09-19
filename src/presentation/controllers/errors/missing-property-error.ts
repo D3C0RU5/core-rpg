@@ -1,6 +1,6 @@
 import { BaseError } from '../../../utils/errors/base-error'
 
-export class MissingProperyError extends BaseError {
+export class MissingPropertyError extends BaseError {
   constructor(context: 'query' | 'body', name: string) {
     super(
       'MissingProperyError',
@@ -8,6 +8,6 @@ export class MissingProperyError extends BaseError {
       `A property ${name} is missing in ${context}`,
       {},
     )
-    Object.setPrototypeOf(this, MissingProperyError.prototype)
+    Object.setPrototypeOf(this, MissingPropertyError.prototype)
   }
 }

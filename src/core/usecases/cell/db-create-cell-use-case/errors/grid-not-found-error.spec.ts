@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto'
-import { NotFoundError } from '../../../errors/not-found-error'
 import { gridNotFoundError } from './grid-not-found-error'
+import { NotFoundError } from '../../../../../utils/errors/not-found-error'
 
 const sut = gridNotFoundError
 

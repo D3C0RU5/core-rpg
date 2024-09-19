@@ -1,4 +1,4 @@
-import { InvalidValueError } from '../../../errors/invalid-value-error'
+import { InvalidValueError } from '../../../../../utils/errors/invalid-value-error'
 import { columnLessThanZeroError } from './column-less-than-zero-error'
 
 const sut = columnLessThanZeroError

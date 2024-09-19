@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto'
 
 type CharacterType = 'player' | 'monster' | 'npc' | 'stub'
 
-type CharacterProps = {
+export type CharacterProps = {
   characterId: string
   health: number
   movimentation: number

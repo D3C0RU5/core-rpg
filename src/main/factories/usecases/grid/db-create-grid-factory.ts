@@ -1,5 +1,5 @@
-import { DbCreateGridUseCase } from '../../../../usecases/grid/db-create-grid-use-case'
-import { GridRepositoryPostgres } from '../../../../infra/database/pgp/repository/grid-repository'
+import { DbCreateGridUseCase } from '../../../../core/usecases/grid/db-create-grid-use-case'
+import { GridRepositoryPostgres } from '../../../../infra/database/pgp/grid-repository'
 import { PgPromiseAdapter } from '../../../../infra/database/pgp/DatabaseConnection'
 
 export const makeDbCreateGrid = (): DbCreateGridUseCase => {

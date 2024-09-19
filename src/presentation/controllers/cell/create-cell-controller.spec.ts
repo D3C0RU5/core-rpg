@@ -1,12 +1,12 @@
-import { CellSnapshot } from '../../../domain/entities/cell'
 import { CreateCellController } from './create-cell-controller'
 import { createCell } from '../../../utils/factories/cell-factory'
-import { ICreateCellUseCase } from '../../../domain/usecases/db-create-cell'
-import { MissingProperyError } from '../errors/missing-property-error'
+import { MissingPropertyError } from '../errors/missing-property-error'
 import {
   createBaseError,
   createGenericError,
 } from '../../../utils/factories/error-factory'
+import { CellSnapshot } from '../../../core/domain/entities/cell'
+import { ICreateCellUseCase } from '../../../core/domain/usecases/db-create-cell'
 
 const fakeCreatedCell = createCell().toSnapshot()
 
@@ -67,7 +67,7 @@ describe('CreateCellController', () => {
 
     // Assert
     expect(result.statusCode).toBe(400)
-    const expectedError = new MissingProperyError('body', 'gridId')
+    const expectedError = new MissingPropertyError('body', 'gridId')
     expect(result.body.name).toBe(expectedError.name)
     expect(result.body.message).toBe(expectedError.message)
   })
@@ -82,7 +82,7 @@ describe('CreateCellController', () => {
 
     // Assert
     expect(result.statusCode).toBe(400)
-    const expectedError = new MissingProperyError('body', 'position')
+    const expectedError = new MissingPropertyError('body', 'position')
     expect(result.body.name).toBe(expectedError.name)
     expect(result.body.message).toBe(expectedError.message)
   })
@@ -99,7 +99,7 @@ describe('CreateCellController', () => {
 
     // Assert
     expect(result.statusCode).toBe(400)
-    const expectedError = new MissingProperyError('body', 'position.row')
+    const expectedError = new MissingPropertyError('body', 'position.row')
     expect(result.body.name).toBe(expectedError.name)
     expect(result.body.message).toBe(expectedError.message)
   })
@@ -116,7 +116,7 @@ describe('CreateCellController', () => {
 
     // Assert
     expect(result.statusCode).toBe(400)
-    const expectedError = new MissingProperyError('body', 'position.column')
+    const expectedError = new MissingPropertyError('body', 'position.column')
     expect(result.body.name).toBe(expectedError.name)
     expect(result.body.message).toBe(expectedError.message)
   })
@@ -133,7 +133,7 @@ describe('CreateCellController', () => {
 
     // Assert
     expect(result.statusCode).toBe(400)
-    const expectedError = new MissingProperyError('body', 'position.column')
+    const expectedError = new MissingPropertyError('body', 'position.column')
     expect(result.body.name).toBe(expectedError.name)
     expect(result.body.message).toBe(expectedError.message)
   })

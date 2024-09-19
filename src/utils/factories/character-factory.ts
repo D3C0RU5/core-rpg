@@ -1,7 +1,9 @@
 import { faker } from '@faker-js/faker'
-import { Character } from '../../domain/entities/character'
+import { Character, CharacterProps } from '../../core/domain/entities/character'
 
-export const createCharacter = (data: Partial<Character> = {}): Character => {
+export const createCharacter = (
+  data: Partial<CharacterProps> = {},
+): Character => {
   return new Character({
     characterId: faker.string.uuid(),
     health: faker.number.int(),

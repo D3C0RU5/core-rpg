@@ -1,4 +1,4 @@
-import { DbCreateGridUseCase } from '../../../usecases/grid/db-create-grid-use-case'
+import { DbCreateGridUseCase } from '../../../core/usecases/grid/db-create-grid-use-case'
 import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 import { Controller } from '../../protocols/controller'
 import { HttpRequest, HttpResponse } from '../../protocols/http'
