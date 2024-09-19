@@ -4,7 +4,9 @@ import { IGridRepositoryCreate } from '../protocols/grid/grid-repository-create'
 import { DbCreateGridUseCase, Input } from './db-create-grid-use-case'
 
 class StubGridRepository implements IGridRepositoryCreate {
-  async create(grid: Grid): Promise<void> {}
+  async create(grid: Grid): Promise<void> {
+    Promise.resolve()
+  }
 }
 
 type SutType = {
