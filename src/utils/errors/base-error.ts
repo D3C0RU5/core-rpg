@@ -16,4 +16,14 @@ export class BaseError extends Error {
 
     Object.setPrototypeOf(this, BaseError.prototype)
   }
+
+  toSnapshot() {
+    const { name, key, message, details } = this
+    return {
+      name,
+      key,
+      message,
+      details,
+    }
+  }
 }

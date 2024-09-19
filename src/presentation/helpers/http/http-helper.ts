@@ -1,3 +1,4 @@
+import { NotFoundError } from '../../../usecases/errors/not-found-error'
 import { BaseError } from '../../../utils/errors/base-error'
 import { ServerError } from '../../errors/server-error'
 import { HttpResponse } from '../../protocols/http'
@@ -22,7 +23,12 @@ export const handleError = (error: unknown): HttpResponse => {
   if (error instanceof BaseError) {
     return {
       statusCode: 400,
-      body: { message: error.message, name: error.name },
+      body: error.toSnapshot(),
+    }
+  } else if (error instanceof NotFoundError) {
+    return {
+      statusCode: 404,
+      body: error.toSnapshot(),
     }
   } else {
     console.error(error)

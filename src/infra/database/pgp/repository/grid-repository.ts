@@ -3,14 +3,14 @@ import { IGridRepositoryCreate } from '../../../../usecases/protocols/grid/grid-
 import { IGridRepositoryExists } from '../../../../usecases/protocols/grid/grid-repository-exists'
 import { DatabaseConnection } from '../DatabaseConnection'
 
-export class GridRepository
+export class GridRepositoryPostgres
   implements IGridRepositoryCreate, IGridRepositoryExists
 {
   constructor(readonly connection: DatabaseConnection) {}
 
   async exists(gridId: string): Promise<boolean> {
     const result = await this.connection.query(
-      "SELECT EXISTS (SELECT 1 FROM grid WHERE grid_id = '5801ba27-3445-45eb-b57d-6b2d3428f5c2') AS record_exists;",
+      'SELECT EXISTS (SELECT 1 FROM grid WHERE grid_id = $1) AS record_exists;',
       [gridId],
     )
 

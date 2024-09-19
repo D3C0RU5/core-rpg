@@ -16,7 +16,7 @@ export class Position {
 
   constructor(props: PositionProps) {
     this.row = props.row
-    this.column = props.row
+    this.column = props.column
   }
 
   static create(row: number, column: number) {
