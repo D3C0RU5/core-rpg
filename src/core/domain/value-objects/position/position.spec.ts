@@ -29,19 +29,19 @@ describe('Position unit test', () => {
     })
   })
 
-  describe('When getRowAsIndex', () => {
+  describe('When Row', () => {
     it('Should return rows value', () => {
       const position = makePosition()
 
-      expect(position.getRowAsIndex()).toBe(rowValue - 1)
+      expect(position.Row).toBe(rowValue)
     })
   })
 
-  describe('When getColumnAsIndex', () => {
+  describe('When Column', () => {
     it('Should return columns value', () => {
       const position = makePosition()
 
-      expect(position.getColumnAsIndex()).toBe(columnValue - 1)
+      expect(position.Column).toBe(columnValue)
     })
   })
 

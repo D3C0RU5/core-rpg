@@ -25,12 +25,12 @@ export class Position {
     return new Position({ row, column })
   }
 
-  getRowAsIndex(): number {
-    return this.row - 1
+  get Row(): number {
+    return this.row
   }
 
-  getColumnAsIndex(): number {
-    return this.column - 1
+  get Column(): number {
+    return this.column
   }
 
   toSnapshot(): PositionSnapshot {

@@ -14,8 +14,8 @@ export class CellRepositoryPostgres
       [
         cell.getId(),
         cell.getGridId(),
-        cell.getPosition().getRowAsIndex(),
-        cell.getPosition().getColumnAsIndex(),
+        cell.getPosition().Row,
+        cell.getPosition().Column,
         cell.getWalkable(),
       ],
     )
@@ -24,11 +24,7 @@ export class CellRepositoryPostgres
   async alreadyExistsInPosition(cell: Cell): Promise<boolean> {
     const result = await this.connection.query(
       'SELECT EXISTS (SELECT 1 FROM cell WHERE grid_id = $1 AND row_index = $2 AND column_index = $3) AS record_exists;',
-      [
-        cell.getGridId(),
-        cell.getPosition().getRowAsIndex(),
-        cell.getPosition().getColumnAsIndex(),
-      ],
+      [cell.getGridId(), cell.getPosition().Row, cell.getPosition().Column],
     )
 
     return result[0]?.record_exists
