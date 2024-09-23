@@ -28,7 +28,7 @@ describe('Grid testes', () => {
     })
   })
 
-  describe('getId unit test', () => {
+  describe('Id unit test', () => {
     it('Should return uuid value', () => {
       // Arrange
       const uuid = crypto.randomUUID()
@@ -38,11 +38,11 @@ describe('Grid testes', () => {
       const grid = new Grid(uuid, size)
 
       // Assert
-      expect(grid.getId()).toBe(uuid)
+      expect(grid.Id).toBe(uuid)
     })
   })
 
-  describe('getSize unit test', () => {
+  describe('Size unit test', () => {
     it('Should return size value', () => {
       // Arrange
       const uuid = crypto.randomUUID()
@@ -52,7 +52,7 @@ describe('Grid testes', () => {
       const grid = new Grid(uuid, size)
 
       // Assert
-      expect(grid.getSize()).toBe(size)
+      expect(grid.Size).toBe(size)
     })
   })
 

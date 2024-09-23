@@ -12,18 +12,18 @@ export class Grid {
     return new Grid(gridId, size)
   }
 
-  getId(): string {
+  get Id(): string {
     return this.gridId
   }
 
-  getSize(): Size {
+  get Size(): Size {
     return this.size
   }
 
   toSnapshot(): GridSnapshot {
     return {
-      gridId: this.getId(),
-      size: this.getSize().toSnapshot(),
+      gridId: this.Id,
+      size: this.Size.toSnapshot(),
     }
   }
 }

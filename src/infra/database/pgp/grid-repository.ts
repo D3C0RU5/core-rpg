@@ -20,7 +20,7 @@ export class GridRepositoryPostgres
   async create(grid: Grid): Promise<void> {
     await this.connection.query(
       'insert into grid (grid_id, rows, columns) values ($1, $2, $3)',
-      [grid.getId(), grid.getSize().Rows, grid.getSize().Columns],
+      [grid.Id, grid.Size.Rows, grid.Size.Columns],
     )
   }
 }
