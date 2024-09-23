@@ -106,7 +106,7 @@ describe('Cell', () => {
       occupiedCell.addCharacter(createCharacter())
 
       expect(occupiedCell.occupied()).toBe(true)
-      expect(occupiedCell.Character?.getId()).toBe(character.getId())
+      expect(occupiedCell.Character?.Id).toBe(character.Id)
     })
   })
 

@@ -14,7 +14,7 @@ describe('Character unit test', () => {
     })
   })
 
-  describe('getId method', () => {
+  describe('Id method', () => {
     it('should return a correct snapshot of the character', () => {
       const uuid = randomUUID()
       const character = new Character({
@@ -24,11 +24,11 @@ describe('Character unit test', () => {
         strength: 15,
       })
 
-      expect(character.getId()).toBe(uuid)
+      expect(character.Id).toBe(uuid)
     })
   })
 
-  describe('getHealth method', () => {
+  describe('Health method', () => {
     it('should return a correct snapshot of the character', () => {
       const character = new Character({
         characterId: 'any-uuid',
@@ -37,11 +37,11 @@ describe('Character unit test', () => {
         strength: 15,
       })
 
-      expect(character.getHealth()).toBe(100)
+      expect(character.Health).toBe(100)
     })
   })
 
-  describe('getMovimentation method', () => {
+  describe('Movimentation method', () => {
     it('should return a correct snapshot of the character', () => {
       const character = new Character({
         characterId: 'any-uuid',
@@ -50,11 +50,11 @@ describe('Character unit test', () => {
         strength: 15,
       })
 
-      expect(character.getMovimentation()).toBe(10)
+      expect(character.Movimentation).toBe(10)
     })
   })
 
-  describe('getStrength method', () => {
+  describe('Strength method', () => {
     it('should return a correct snapshot of the character', () => {
       const character = new Character({
         characterId: 'any-uuid',
@@ -63,7 +63,7 @@ describe('Character unit test', () => {
         strength: 15,
       })
 
-      expect(character.getStrength()).toBe(15)
+      expect(character.Strength).toBe(15)
     })
   })
 
@@ -72,10 +72,10 @@ describe('Character unit test', () => {
       const character = Character.create(100, 10, 15)
       const snapshot = character.toSnapshot()
 
-      expect(snapshot.characterId).toBe(character.getId())
-      expect(snapshot.health).toBe(character.getHealth())
-      expect(snapshot.movimentation).toBe(character.getMovimentation())
-      expect(snapshot.strength).toBe(character.getStrength())
+      expect(snapshot.characterId).toBe(character.Id)
+      expect(snapshot.health).toBe(character.Health)
+      expect(snapshot.movimentation).toBe(character.Movimentation)
+      expect(snapshot.strength).toBe(character.Strength)
     })
   })
 })
@@ -85,9 +85,9 @@ describe('Factory Tests', () => {
     it('should create a character with stub default values', () => {
       const stub = StubFactory.create()
 
-      expect(stub.getHealth()).toBe(100)
-      expect(stub.getMovimentation()).toBe(10)
-      expect(stub.getStrength()).toBe(10)
+      expect(stub.Health).toBe(100)
+      expect(stub.Movimentation).toBe(10)
+      expect(stub.Strength).toBe(10)
     })
   })
 
@@ -95,9 +95,9 @@ describe('Factory Tests', () => {
     it('should create a player with default values', () => {
       const player = PlayerFactory.create()
 
-      expect(player.getHealth()).toBe(100)
-      expect(player.getMovimentation()).toBe(10)
-      expect(player.getStrength()).toBe(10)
+      expect(player.Health).toBe(100)
+      expect(player.Movimentation).toBe(10)
+      expect(player.Strength).toBe(10)
     })
   })
 
@@ -105,9 +105,9 @@ describe('Factory Tests', () => {
     it('should create a monster with default values', () => {
       const monster = MonsterFactory.create()
 
-      expect(monster.getHealth()).toBe(500)
-      expect(monster.getMovimentation()).toBe(6)
-      expect(monster.getStrength()).toBe(15)
+      expect(monster.Health).toBe(500)
+      expect(monster.Movimentation).toBe(6)
+      expect(monster.Strength).toBe(15)
     })
   })
 })

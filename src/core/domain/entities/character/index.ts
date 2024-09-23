@@ -35,19 +35,19 @@ export class Character {
     return new Character({ characterId, health, movimentation, strength })
   }
 
-  getId(): string {
+  get Id(): string {
     return this.characterId
   }
 
-  getHealth() {
+  get Health() {
     return this.health
   }
 
-  getMovimentation() {
+  get Movimentation() {
     return this.movimentation
   }
 
-  getStrength() {
+  get Strength() {
     return this.strength
   }
 
