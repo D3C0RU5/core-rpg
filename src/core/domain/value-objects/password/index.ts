@@ -8,7 +8,7 @@ export class Password {
   constructor(private readonly password: string) {}
 
   public static create(password: string) {
-    const isValid = Password.validate(password)
+    Password.validate(password)
 
     return new Password(password)
   }
@@ -28,5 +28,9 @@ export class Password {
     }
 
     return true
+  }
+
+  get Value(): string {
+    return this.password
   }
 }

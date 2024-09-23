@@ -52,4 +52,17 @@ describe('Password unit test', () => {
       expect(act).toThrow(Error)
     })
   })
+
+  describe('When call Value', () => {
+    it('Return password value', () => {
+      // Arrange
+      const value = 'password'
+
+      // Act
+      const password = new Password(value)
+
+      // Assert
+      expect(password.Value).toBe(value)
+    })
+  })
 })
