@@ -12,11 +12,11 @@ export class Size {
     return new Size(rows, columns)
   }
 
-  getRows(): number {
+  get Rows(): number {
     return this.rows
   }
 
-  getColumns(): number {
+  get Columns(): number {
     return this.columns
   }
 

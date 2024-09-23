@@ -29,19 +29,19 @@ describe('Size unit test', () => {
     })
   })
 
-  describe('When getRows', () => {
+  describe('When Rows', () => {
     it('Should return rows value', () => {
       const size = makeSize()
 
-      expect(size.getRows()).toBe(rowsValue)
+      expect(size.Rows).toBe(rowsValue)
     })
   })
 
-  describe('When getColumns', () => {
+  describe('When Columns', () => {
     it('Should return columns value', () => {
       const size = makeSize()
 
-      expect(size.getColumns()).toBe(columnsValue)
+      expect(size.Columns).toBe(columnsValue)
     })
   })
 
