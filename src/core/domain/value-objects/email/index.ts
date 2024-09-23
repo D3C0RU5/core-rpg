@@ -16,7 +16,7 @@ export class Email {
     return /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(email)
   }
 
-  public getValue(): string {
+  get Value(): string {
     return this.email
   }
 }

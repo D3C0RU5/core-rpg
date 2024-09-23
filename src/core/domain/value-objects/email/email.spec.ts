@@ -45,11 +45,11 @@ describe('Email unit test', () => {
 
   describe('When call getValue', () => {
     it('Return value', () => {
-      const email = 'any_mail@mail.com'
+      const emailValue = 'any_mail@mail.com'
 
-      const result = new Email(email)
+      const email = new Email(emailValue)
 
-      expect(result.getValue()).toBe(email)
+      expect(email.Value).toBe(email)
     })
   })
 })
