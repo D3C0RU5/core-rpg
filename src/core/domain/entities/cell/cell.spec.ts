@@ -18,11 +18,11 @@ describe('Cell', () => {
         walkable: true,
       })
 
-      expect(cell.getId()).toBe(cellId)
-      expect(cell.getGridId()).toBe('grid-123')
-      expect(cell.getPosition()).toEqual(position)
-      expect(cell.getWalkable()).toBe(true)
-      expect(cell.getCharacter()).toBeUndefined()
+      expect(cell.Id).toBe(cellId)
+      expect(cell.GridId).toBe('grid-123')
+      expect(cell.Position).toEqual(position)
+      expect(cell.Walkable).toBe(true)
+      expect(cell.Character).toBeUndefined()
     })
   })
 
@@ -30,10 +30,10 @@ describe('Cell', () => {
     it('should create a cell with the correct attributes', () => {
       const cell = createCell()
 
-      expect(cell.getId()).toBeDefined()
-      expect(cell.getGridId()).toBe('grid-123')
-      expect(cell.getPosition()).toEqual(position)
-      expect(cell.getWalkable()).toBe(true)
+      expect(cell.Id).toBeDefined()
+      expect(cell.GridId).toBe('grid-123')
+      expect(cell.Position).toEqual(position)
+      expect(cell.Walkable).toBe(true)
     })
   })
 
@@ -106,7 +106,7 @@ describe('Cell', () => {
       occupiedCell.addCharacter(createCharacter())
 
       expect(occupiedCell.occupied()).toBe(true)
-      expect(occupiedCell.getCharacter()?.getId()).toBe(character.getId())
+      expect(occupiedCell.Character?.getId()).toBe(character.getId())
     })
   })
 
@@ -132,7 +132,7 @@ describe('Cell', () => {
       cell.removeCharacter()
 
       expect(cell.occupied()).toBe(false)
-      expect(cell.getCharacter()).toBeUndefined()
+      expect(cell.Character).toBeUndefined()
     })
   })
 
@@ -140,7 +140,7 @@ describe('Cell', () => {
     it('should return the correct walkable state', () => {
       const cell = createCell()
 
-      expect(cell.getWalkable()).toBe(true)
+      expect(cell.Walkable).toBe(true)
     })
   })
 
@@ -148,7 +148,7 @@ describe('Cell', () => {
     it('should return null if there is no character in the cell', () => {
       const cell = createCell()
 
-      expect(cell.getCharacter()).toBeUndefined()
+      expect(cell.Character).toBeUndefined()
     })
 
     it('should return the character if there is one in the cell', () => {
@@ -160,7 +160,7 @@ describe('Cell', () => {
         character: createCharacter(),
       })
 
-      expect(cell.getCharacter()).toBeDefined()
+      expect(cell.Character).toBeDefined()
     })
   })
 
@@ -168,7 +168,7 @@ describe('Cell', () => {
     it('should return the correct cell ID', () => {
       const cell = createCell()
 
-      expect(cell.getId()).toBe(cell['cellId'])
+      expect(cell.Id).toBe(cell['cellId'])
     })
   })
 
@@ -176,7 +176,7 @@ describe('Cell', () => {
     it('should return the correct grid ID', () => {
       const cell = createCell()
 
-      expect(cell.getGridId()).toBe('grid-123')
+      expect(cell.GridId).toBe('grid-123')
     })
   })
 
@@ -184,7 +184,7 @@ describe('Cell', () => {
     it('should return the correct position', () => {
       const cell = createCell()
 
-      expect(cell.getPosition()).toEqual(position)
+      expect(cell.Position).toEqual(position)
     })
   })
 
@@ -193,9 +193,9 @@ describe('Cell', () => {
       const cell = createCell()
       const snapshot = cell.toSnapshot()
 
-      expect(snapshot.cellId).toBe(cell.getId())
-      expect(snapshot.walkable).toBe(cell.getWalkable())
-      expect(snapshot.position).toEqual(cell.getPosition())
+      expect(snapshot.cellId).toBe(cell.Id)
+      expect(snapshot.walkable).toBe(cell.Walkable)
+      expect(snapshot.position).toEqual(cell.Position)
       expect(snapshot.character).toBeUndefined()
     })
 

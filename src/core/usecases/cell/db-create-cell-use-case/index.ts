@@ -36,7 +36,7 @@ export class DbCreateCellUseCase implements ICreateCellUseCase {
     )
     const exists = await this.cellRepository.alreadyExistsInPosition(cell)
     if (!exists) {
-      throw invalidGridInPositionError(cell.getPosition())
+      throw invalidGridInPositionError(cell.Position)
     }
     await this.cellRepository.create(cell)
 

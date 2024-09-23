@@ -6,7 +6,7 @@ export type CellProps = {
   gridId: string
   position: Position
   walkable: boolean
-  character?: Character | null
+  character?: Character
 }
 
 export class Cell {
@@ -14,14 +14,14 @@ export class Cell {
   private gridId: string
   private position: Position
   private walkable: boolean
-  private character?: Character | null
+  private character: Character | null
 
   constructor(props: CellProps) {
     this.cellId = props.cellId
     this.gridId = props.gridId
     this.position = props.position
     this.walkable = props.walkable
-    this.character = props.character
+    this.character = props.character || null
   }
 
   static create(gridId: string, position: Position, walkable: boolean): Cell {
@@ -49,24 +49,24 @@ export class Cell {
     }
   }
 
-  getWalkable() {
-    return this.walkable
-  }
-
-  getCharacter() {
-    return this.character
-  }
-
-  getId() {
+  get Id() {
     return this.cellId
   }
 
-  getGridId() {
+  get GridId() {
     return this.gridId
   }
 
-  getPosition() {
+  get Position() {
     return this.position
+  }
+
+  get Walkable(): boolean {
+    return this.walkable
+  }
+
+  get Character(): Character | null {
+    return this.character
   }
 
   toSnapshot(): CellSnapshot {
