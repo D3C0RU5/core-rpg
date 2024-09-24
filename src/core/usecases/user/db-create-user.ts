@@ -6,18 +6,18 @@ import { IUserRepositoryCreate } from '../protocols/user/user-repository-create'
 import { IUserRepositoryEmailInUse } from '../protocols/user/user-repository-email-in-use'
 import { emailAlreadyInUseError } from './errors/email-already-in-use-error'
 
-export type Input = {
+type Input = {
   name: string
   email: string
   password: string
 }
 
-type UserRepositoryAggregation = IUserRepositoryCreate &
+export type ICreateUserRepositoryAggregation = IUserRepositoryCreate &
   IUserRepositoryEmailInUse
 
 export class DbCreateUserUseCase implements UseCase {
   constructor(
-    private readonly userRepository: UserRepositoryAggregation,
+    private readonly userRepository: ICreateUserRepositoryAggregation,
     private readonly criptography: ICriptographyHash,
   ) {}
 
