@@ -1,11 +1,10 @@
 import { Email } from '../../value-objects/email'
-import { Password } from '../../value-objects/password'
 import { User } from './user'
 
 const userId = crypto.randomUUID()
 const name = 'any_name'
 const email = new Email('any-email@example.com')
-const password = new Password('any-password-123')
+const password = 'any-password-123'
 const token = 'any_token_value'
 
 describe('User testes', () => {

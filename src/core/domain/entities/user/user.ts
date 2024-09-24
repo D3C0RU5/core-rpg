@@ -1,11 +1,10 @@
 import { Email } from '../../value-objects/email'
-import { Password } from '../../value-objects/password'
 
 export type UserProps = {
   userId: string
   name: string
   email: Email
-  password: Password
+  password: string
   token?: string
 }
 
@@ -13,7 +12,7 @@ export class User {
   private userId: string
   private name: string
   private email: Email
-  private password: Password
+  private password: string
   private token?: string
 
   constructor(props: UserProps) {
@@ -24,7 +23,7 @@ export class User {
     this.token = props.token
   }
 
-  static create(name: string, email: Email, password: Password): User {
+  static create(name: string, email: Email, password: string): User {
     const userId = crypto.randomUUID()
 
     return new User({ userId, email, name, password })
@@ -42,7 +41,7 @@ export class User {
     return this.email
   }
 
-  get Password(): Password {
+  get Password(): string {
     return this.password
   }
 
