@@ -1,48 +1,49 @@
 import { Email } from '../../value-objects/email'
+import { UUID } from '../../value-objects/UUID'
 
 export type UserProps = {
   userId: string
   name: string
-  email: Email
-  password: string
+  email: string
+  hashedPassword: string
   token?: string
 }
 
 export class User {
-  private userId: string
+  private userId: UUID
   private name: string
   private email: Email
-  private password: string
+  private hashedPassword: string
   private token?: string
 
-  constructor(props: UserProps) {
-    this.userId = props.userId
-    this.name = props.name
-    this.email = props.email
-    this.password = props.password
-    this.token = props.token
+  constructor({ userId, name, email, hashedPassword, token }: UserProps) {
+    this.userId = new UUID(userId)
+    this.name = name
+    this.email = new Email(email)
+    this.hashedPassword = hashedPassword
+    this.token = token
   }
 
-  static create(name: string, email: Email, password: string): User {
+  static create(name: string, email: string, hashedPassword: string): User {
     const userId = crypto.randomUUID()
 
-    return new User({ userId, email, name, password })
+    return new User({ userId, name, email, hashedPassword })
   }
 
   get Id(): string {
-    return this.userId
+    return this.userId.Value
   }
 
   get Name(): string {
     return this.name
   }
 
-  get Email(): Email {
-    return this.email
+  get Email(): string {
+    return this.email.Value
   }
 
-  get Password(): string {
-    return this.password
+  get HashedPassword(): string {
+    return this.hashedPassword
   }
 
   get Token(): string | undefined {
