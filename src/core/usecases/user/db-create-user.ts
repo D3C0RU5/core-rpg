@@ -1,28 +1,23 @@
 import { User } from '../../domain/entities/user/user'
-import { UseCase } from '../../domain/usecases/usecase'
+import {
+  ICreateUserUseCase,
+  InputCreateUser,
+} from '../../domain/usecases/db-create-user'
 import { Password } from '../../domain/value-objects/password'
 import { ICriptographyHash } from '../protocols/criptography/hash'
 import { IUserRepositoryCreate } from '../protocols/user/user-repository-create'
 import { IUserRepositoryEmailInUse } from '../protocols/user/user-repository-email-in-use'
 import { emailAlreadyInUseError } from './errors/email-already-in-use-error'
 
-type Input = {
-  name: string
-  email: string
-  password: string
-}
-
-export type ICreateUserRepositoryAggregation = IUserRepositoryCreate &
-  IUserRepositoryEmailInUse
-
-export class DbCreateUserUseCase implements UseCase {
+export class DbCreateUserUseCase implements ICreateUserUseCase {
   constructor(
-    private readonly userRepository: ICreateUserRepositoryAggregation,
+    private readonly createUserRepository: IUserRepositoryCreate,
+    private readonly isEmailInUseRepository: IUserRepositoryEmailInUse,
     private readonly criptography: ICriptographyHash,
   ) {}
 
-  async execute({ name, email, ...input }: Input): Promise<void> {
-    const isEmailInUse = await this.userRepository.isEmailInUse(email)
+  async execute({ name, email, ...input }: InputCreateUser): Promise<void> {
+    const isEmailInUse = await this.isEmailInUseRepository.isEmailInUse(email)
     if (isEmailInUse) throw emailAlreadyInUseError(email)
 
     const password = Password.create(input.password)
@@ -30,6 +25,6 @@ export class DbCreateUserUseCase implements UseCase {
 
     const user = User.create(name, email, hashedPassword)
 
-    await this.userRepository.create(user)
+    await this.createUserRepository.create(user)
   }
 }

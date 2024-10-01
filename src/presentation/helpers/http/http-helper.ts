@@ -4,7 +4,7 @@ import { ServerError } from '../../errors/server-error'
 import { HttpResponse } from '../../protocols/http'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const ok = (data: any): HttpResponse => ({
+export const ok = (data?: any): HttpResponse => ({
   statusCode: 200,
   body: data,
 })

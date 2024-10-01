@@ -11,9 +11,5 @@ export type InputCreateCell = {
 }
 
 export abstract class ICreateCellUseCase implements UseCase {
-  abstract execute({
-    gridId,
-    position,
-    walkable,
-  }: InputCreateCell): Promise<CellSnapshot>
+  abstract execute(input: InputCreateCell): Promise<CellSnapshot>
 }

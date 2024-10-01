@@ -2,16 +2,17 @@ import { User } from '../../domain/entities/user/user'
 import { invalidEmailError } from '../../domain/value-objects/email/errors/invalid-email-error'
 import { missingRequirementsPasswordError } from '../../domain/value-objects/password/errors/missing-requirements-password-error'
 import { ICriptographyHash } from '../protocols/criptography/hash'
-import {
-  DbCreateUserUseCase,
-  ICreateUserRepositoryAggregation,
-} from './db-create-user'
+import { IUserRepositoryCreate } from '../protocols/user/user-repository-create'
+import { IUserRepositoryEmailInUse } from '../protocols/user/user-repository-email-in-use'
+import { DbCreateUserUseCase } from './db-create-user'
 import { emailAlreadyInUseError } from './errors/email-already-in-use-error'
 
-class UserRepositoryStub implements ICreateUserRepositoryAggregation {
+class UserCreateRepositoryStub implements IUserRepositoryCreate {
   async create(user: User): Promise<void> {
     Promise.resolve()
   }
+}
+class EmailInUseRepositoryStub implements IUserRepositoryEmailInUse {
   async isEmailInUse(value: string): Promise<boolean> {
     return Promise.resolve(false)
   }
@@ -25,15 +26,26 @@ class CriptographyStub implements ICriptographyHash {
 
 type SutProps = {
   sut: DbCreateUserUseCase
-  userRepositoryStub: UserRepositoryStub
+  userCreateRepositoryStub: UserCreateRepositoryStub
+  emailInUseRepositoryStub: EmailInUseRepositoryStub
   criptographyStub: ICriptographyHash
 }
 const makeSut = (): SutProps => {
-  const userRepositoryStub = new UserRepositoryStub()
+  const userCreateRepositoryStub = new UserCreateRepositoryStub()
+  const emailInUseRepositoryStub = new EmailInUseRepositoryStub()
   const criptographyStub = new CriptographyStub()
-  const sut = new DbCreateUserUseCase(userRepositoryStub, criptographyStub)
+  const sut = new DbCreateUserUseCase(
+    userCreateRepositoryStub,
+    emailInUseRepositoryStub,
+    criptographyStub,
+  )
 
-  return { sut, userRepositoryStub, criptographyStub }
+  return {
+    sut,
+    userCreateRepositoryStub,
+    emailInUseRepositoryStub,
+    criptographyStub,
+  }
 }
 
 const fakeInput = {
@@ -45,10 +57,10 @@ const fakeInput = {
 describe('DbCreateUserUseCase unit test', () => {
   it('Create user when is valid', async () => {
     // Arrange
-    const { sut, userRepositoryStub } = makeSut()
+    const { sut, userCreateRepositoryStub } = makeSut()
 
     // Mock
-    const createSpy = jest.spyOn(userRepositoryStub, 'create')
+    const createSpy = jest.spyOn(userCreateRepositoryStub, 'create')
 
     // Act
     await sut.execute(fakeInput)
@@ -64,10 +76,12 @@ describe('DbCreateUserUseCase unit test', () => {
 
   it('throws emailAlreadyInUseError when isEmailInUse returns true', async () => {
     // Arrange
-    const { sut, userRepositoryStub } = makeSut()
+    const { sut, emailInUseRepositoryStub } = makeSut()
 
     // Mock
-    jest.spyOn(userRepositoryStub, 'isEmailInUse').mockResolvedValueOnce(true)
+    jest
+      .spyOn(emailInUseRepositoryStub, 'isEmailInUse')
+      .mockResolvedValueOnce(true)
 
     // Act
     const act = () => sut.execute(fakeInput)
@@ -78,12 +92,12 @@ describe('DbCreateUserUseCase unit test', () => {
 
   it('throws emailAlreadyInUseError when isEmailInUse throws', async () => {
     // Arrange
-    const { sut, userRepositoryStub } = makeSut()
+    const { sut, emailInUseRepositoryStub } = makeSut()
 
     const expectedError = new Error('error')
     // Mock
     jest
-      .spyOn(userRepositoryStub, 'isEmailInUse')
+      .spyOn(emailInUseRepositoryStub, 'isEmailInUse')
       .mockRejectedValueOnce(expectedError)
 
     // Act
@@ -138,12 +152,12 @@ describe('DbCreateUserUseCase unit test', () => {
 
   it('throws when hash throws', async () => {
     // Arrange
-    const { sut, userRepositoryStub } = makeSut()
+    const { sut, userCreateRepositoryStub } = makeSut()
 
     const expectedError = new Error('error')
     // Mock
     jest
-      .spyOn(userRepositoryStub, 'create')
+      .spyOn(userCreateRepositoryStub, 'create')
       .mockRejectedValueOnce(expectedError)
 
     // Act
