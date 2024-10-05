@@ -2,7 +2,7 @@ import { User } from './user'
 
 const userId = crypto.randomUUID()
 const name = 'any_name'
-const email = 'any-email@example.com'
+const email = 'anyemail@example.com'
 const hashedPassword = 'any-password-123'
 const token = 'any_token_value'
 
