@@ -2,8 +2,8 @@ import { Size, SizeSnapshot } from '../../value-objects/size'
 
 export class Grid {
   constructor(
-    private gridId: string,
-    private size: Size,
+    private readonly gridId: string,
+    private readonly size: Size,
   ) {}
 
   static create(size: Size): Grid {

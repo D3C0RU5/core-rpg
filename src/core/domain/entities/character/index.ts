@@ -17,10 +17,10 @@ export type CharacterSnapshot = {
 }
 
 export class Character {
-  private characterId: string
-  private health: number
-  private movimentation: number
-  private strength: number
+  private readonly characterId: string
+  private readonly health: number
+  private readonly movimentation: number
+  private readonly strength: number
 
   constructor(props: CharacterProps) {
     this.characterId = props.characterId

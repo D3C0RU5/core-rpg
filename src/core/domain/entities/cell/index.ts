@@ -10,10 +10,10 @@ export type CellProps = {
 }
 
 export class Cell {
-  private cellId: string
-  private gridId: string
-  private position: Position
-  private walkable: boolean
+  private readonly cellId: string
+  private readonly gridId: string
+  private readonly position: Position
+  private readonly walkable: boolean
   private character: Character | null
 
   constructor(props: CellProps) {

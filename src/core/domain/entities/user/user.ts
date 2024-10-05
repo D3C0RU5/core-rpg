@@ -10,11 +10,11 @@ export type UserProps = {
 }
 
 export class User {
-  private userId: UUID
-  private name: string
-  private email: Email
-  private hashedPassword: string
-  private token?: string
+  private readonly userId: UUID
+  private readonly name: string
+  private readonly email: Email
+  private readonly hashedPassword: string
+  private readonly token?: string
 
   constructor({ userId, name, email, hashedPassword, token }: UserProps) {
     this.userId = new UUID(userId)
