@@ -1,19 +1,15 @@
 import { Grid, GridSnapshot } from '../../domain/entities/grid'
 import { Size } from '../../domain/value-objects/size'
 import { IGridRepositoryCreate } from '../protocols/grid/grid-repository-create'
-import { UseCase } from '../../domain/usecases/usecase'
+import {
+  ICreateGridUseCase,
+  InputCreateGrid,
+} from '../../domain/usecases/db-create-grid'
 
-export type Input = {
-  size: {
-    rows: number
-    columns: number
-  }
-}
-
-export class DbCreateGridUseCase implements UseCase {
+export class DbCreateGridUseCase implements ICreateGridUseCase {
   constructor(private readonly gridRepository: IGridRepositoryCreate) {}
 
-  async execute(input: Input): Promise<GridSnapshot> {
+  async execute(input: InputCreateGrid): Promise<GridSnapshot> {
     const { rows, columns } = input.size
     const size = Size.create(rows, columns)
     const grid = Grid.create(size)
