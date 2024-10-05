@@ -1,7 +1,7 @@
 import { User } from '../../domain/entities/user/user'
 import { invalidEmailError } from '../../domain/value-objects/email/errors/invalid-email-error'
 import { missingRequirementsPasswordError } from '../../domain/value-objects/password/errors/missing-requirements-password-error'
-import { ICriptographyHash } from '../protocols/criptography/hash'
+import { Hasher } from '../protocols/criptography/hasher'
 import { IUserRepositoryCreate } from '../protocols/user/user-repository-create'
 import { IUserRepositoryEmailInUse } from '../protocols/user/user-repository-email-in-use'
 import { DbCreateUserUseCase } from './db-create-user'
@@ -18,9 +18,9 @@ class EmailInUseRepositoryStub implements IUserRepositoryEmailInUse {
   }
 }
 
-class CriptographyStub implements ICriptographyHash {
-  hash(value: string): string {
-    return 'hashed_password'
+class CriptographyStub implements Hasher {
+  async hash(value: string): Promise<string> {
+    return Promise.resolve('hashed_password')
   }
 }
 
@@ -28,7 +28,7 @@ type SutProps = {
   sut: DbCreateUserUseCase
   userCreateRepositoryStub: UserCreateRepositoryStub
   emailInUseRepositoryStub: EmailInUseRepositoryStub
-  criptographyStub: ICriptographyHash
+  criptographyStub: Hasher
 }
 const makeSut = (): SutProps => {
   const userCreateRepositoryStub = new UserCreateRepositoryStub()

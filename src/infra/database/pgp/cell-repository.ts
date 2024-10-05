@@ -10,7 +10,7 @@ export class CellRepositoryPostgres
 
   async create(cell: Cell): Promise<void> {
     await this.connection.query(
-      'insert into cell (cell_id, grid_id, row_index, column_index, walkable) values ($1, $2, $3, $4, $5)',
+      'insert into cells (cell_id, grid_id, row_index, column_index, walkable) values ($1, $2, $3, $4, $5)',
       [
         cell.Id,
         cell.GridId,
@@ -23,7 +23,7 @@ export class CellRepositoryPostgres
 
   async alreadyExistsInPosition(cell: Cell): Promise<boolean> {
     const result = await this.connection.query(
-      'SELECT EXISTS (SELECT 1 FROM cell WHERE grid_id = $1 AND row_index = $2 AND column_index = $3) AS record_exists;',
+      'SELECT EXISTS (SELECT 1 FROM cells WHERE grid_id = $1 AND row_index = $2 AND column_index = $3) AS record_exists;',
       [cell.GridId, cell.Position.Row, cell.Position.Column],
     )
 

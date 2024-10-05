@@ -1,15 +1,15 @@
 
 -- Create table for Grid
-CREATE TABLE grid (
+CREATE TABLE grids (
     grid_id UUID PRIMARY KEY,
     rows INT NOT NULL,
     columns INT NOT NULL
 );
 
 -- Create table for Cell
-CREATE TABLE cell (
+CREATE TABLE cells (
     cell_id UUID PRIMARY KEY,
-    grid_id UUID REFERENCES grid(grid_id),
+    grid_id UUID REFERENCES grids(grid_id),
     row_index INT NOT NULL,
     column_index INT NOT NULL,
     walkable BOOLEAN NOT NULL,
@@ -18,11 +18,20 @@ CREATE TABLE cell (
 );
 
 -- Create table for Character
-CREATE TABLE character (
+CREATE TABLE characters (
     character_id UUID PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     position_row INT,
     position_column INT
+);
+
+-- Create table for User
+CREATE TABLE users (
+    user_id UUID PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    hashed_password VARCHAR(255) NOT NULL,
+    token VARCHAR(255)
 );
 
 -- Optional: Insert initial data (example)

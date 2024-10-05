@@ -10,7 +10,7 @@ export class GridRepositoryPostgres
 
   async exists(gridId: string): Promise<boolean> {
     const result = await this.connection.query(
-      'SELECT EXISTS (SELECT 1 FROM grid WHERE grid_id = $1) AS record_exists;',
+      'SELECT EXISTS (SELECT 1 FROM grids WHERE grid_id = $1) AS record_exists;',
       [gridId],
     )
 
@@ -19,7 +19,7 @@ export class GridRepositoryPostgres
 
   async create(grid: Grid): Promise<void> {
     await this.connection.query(
-      'insert into grid (grid_id, rows, columns) values ($1, $2, $3)',
+      'insert into grids (grid_id, rows, columns) values ($1, $2, $3)',
       [grid.Id, grid.Size.Rows, grid.Size.Columns],
     )
   }

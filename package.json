@@ -28,6 +28,8 @@
     "typescript": "^5.5.4"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1",
     "express": "^4.19.2",
     "pg-promise": "^11.9.1",
     "uuid": "^10.0.0"
