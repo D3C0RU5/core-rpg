@@ -22,7 +22,7 @@ describe('Cell', () => {
       expect(cell.GridId).toBe('grid-123')
       expect(cell.Position).toEqual(position)
       expect(cell.Walkable).toBe(true)
-      expect(cell.Character).toBeUndefined()
+      expect(cell.Character).toBeNull()
     })
   })
 
@@ -132,7 +132,7 @@ describe('Cell', () => {
       cell.removeCharacter()
 
       expect(cell.occupied()).toBe(false)
-      expect(cell.Character).toBeUndefined()
+      expect(cell.Character).toBeNull()
     })
   })
 
@@ -148,7 +148,7 @@ describe('Cell', () => {
     it('should return null if there is no character in the cell', () => {
       const cell = createCell()
 
-      expect(cell.Character).toBeUndefined()
+      expect(cell.Character).toBeNull()
     })
 
     it('should return the character if there is one in the cell', () => {
