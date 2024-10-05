@@ -1,4 +1,4 @@
-import { PgPromiseAdapter } from '../../../../infra/database/pgp/DatabaseConnection'
+import { PgPromiseAdapter } from '../../../../infra/database/pgp/helper/pg-promise-adapter'
 import { DbCreateUserUseCase } from '../../../../core/usecases/user/db-create-user'
 import { UserRepositoryPostgres } from '../../../../infra/database/pgp/user-repository'
 import { BcryptAdapter } from '../../../../infra/criptography/bcrypt/bcrypt-adapter'

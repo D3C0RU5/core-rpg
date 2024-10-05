@@ -1,12 +1,12 @@
 import { User } from '../../../core/domain/entities/user/user'
 import { IUserRepositoryCreate } from '../../../core/usecases/protocols/user/user-repository-create'
 import { IUserRepositoryEmailInUse } from '../../../core/usecases/protocols/user/user-repository-email-in-use'
-import { DatabaseConnection } from './DatabaseConnection'
+import { IDatabasePostgresConnection } from './protocols/database-connection'
 
 export class UserRepositoryPostgres
   implements IUserRepositoryCreate, IUserRepositoryEmailInUse
 {
-  constructor(readonly connection: DatabaseConnection) {}
+  constructor(readonly connection: IDatabasePostgresConnection) {}
 
   async create(user: User): Promise<void> {
     await this.connection.query(

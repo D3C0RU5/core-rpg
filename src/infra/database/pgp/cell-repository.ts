@@ -1,12 +1,12 @@
 import { Cell } from '../../../core/domain/entities/cell'
 import { ICellRepositoryAlreadyExistsInPosition } from '../../../core/usecases/protocols/cell/cell-repository-already-exists-in-position'
 import { ICellRepositoryCreate } from '../../../core/usecases/protocols/cell/cell-repository-create'
-import { DatabaseConnection } from './DatabaseConnection'
+import { IDatabasePostgresConnection } from './protocols/database-connection'
 
 export class CellRepositoryPostgres
   implements ICellRepositoryCreate, ICellRepositoryAlreadyExistsInPosition
 {
-  constructor(readonly connection: DatabaseConnection) {}
+  constructor(readonly connection: IDatabasePostgresConnection) {}
 
   async create(cell: Cell): Promise<void> {
     await this.connection.query(

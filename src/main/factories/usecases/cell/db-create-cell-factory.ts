@@ -1,5 +1,5 @@
 import { GridRepositoryPostgres } from '../../../../infra/database/pgp/grid-repository'
-import { PgPromiseAdapter } from '../../../../infra/database/pgp/DatabaseConnection'
+import { PgPromiseAdapter } from '../../../../infra/database/pgp/helper/pg-promise-adapter'
 import { DbCreateCellUseCase } from '../../../../core/usecases/cell/db-create-cell-use-case'
 import { CellRepositoryPostgres } from '../../../../infra/database/pgp/cell-repository'
 

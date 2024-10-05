@@ -1,14 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import pgp from 'pg-promise'
-
-export interface DatabaseConnection {
-  query(statement: string, params: any): Promise<any>
-  close(): Promise<void>
-}
+import { IDatabasePostgresConnection } from '../protocols/database-connection'
 
 let instance: PgPromiseAdapter
 
-export class PgPromiseAdapter implements DatabaseConnection {
+export class PgPromiseAdapter implements IDatabasePostgresConnection {
   connection: any
 
   private constructor() {

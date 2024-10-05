@@ -1,12 +1,12 @@
 import { Grid } from '../../../core/domain/entities/grid'
 import { IGridRepositoryCreate } from '../../../core/usecases/protocols/grid/grid-repository-create'
 import { IGridRepositoryExists } from '../../../core/usecases/protocols/grid/grid-repository-exists'
-import { DatabaseConnection } from './DatabaseConnection'
+import { IDatabasePostgresConnection } from './protocols/database-connection'
 
 export class GridRepositoryPostgres
   implements IGridRepositoryCreate, IGridRepositoryExists
 {
-  constructor(readonly connection: DatabaseConnection) {}
+  constructor(readonly connection: IDatabasePostgresConnection) {}
 
   async exists(gridId: string): Promise<boolean> {
     const result = await this.connection.query(
