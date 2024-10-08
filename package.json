@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon --config .env src/main/server.ts",
     "test": "npx jest -c ./jest-unit.config.js",
-    "integration:test": "npx jest -c ./jest-integration.config.js"
+    "integration:test": "npx jest -c ./jest-integration.config.js",
+    "dev:up": "docker compose -f ./docker/dev/docker-compose.yml up"
   },
   "keywords": [],
   "author": "",

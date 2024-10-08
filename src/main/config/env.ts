@@ -1,3 +1,3 @@
 export default {
-  port: process.env.port ?? 5050,
+  port: process.env.APPLICATION_PORT ?? 5050,
 }
