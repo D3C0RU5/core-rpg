@@ -1,11 +1,9 @@
-import { PgPromiseAdapter } from '../../../../infra/database/pgp/helper/pg-promise-adapter'
 import { DbCreateUserUseCase } from '../../../../core/usecases/user/db-create-user'
-import { UserRepositoryPostgres } from '../../../../infra/database/pgp/user-repository'
 import { BcryptAdapter } from '../../../../infra/criptography/bcrypt/bcrypt-adapter'
+import { UserRepository } from '../../../../infra/database/typeorm/user-repository'
 
 export const makeDbCreateUser = (): DbCreateUserUseCase => {
-  const connection = PgPromiseAdapter.getInstanceConnection()
-  const userRepository = new UserRepositoryPostgres(connection)
+  const userRepository = new UserRepository()
   const hasher = new BcryptAdapter(10)
 
   return new DbCreateUserUseCase(userRepository, userRepository, hasher)
