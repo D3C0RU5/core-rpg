@@ -19,7 +19,7 @@ export class UserRepository
   }
 
   async create(user: User): Promise<void> {
-    this.repository.insert({
+    await this.repository.insert({
       userId: user.Id,
       name: user.Name,
       email: user.Email,

@@ -6,7 +6,7 @@ export const createUser = (data: Partial<UserProps> = {}): User => {
     userId: faker.string.uuid(),
     name: faker.word.words(),
     email: faker.internet.email(),
-    hashedPassword: faker.string.uuid(),
+    hashedPassword: faker.internet.password(),
     token: faker.string.uuid(),
     ...data,
   })

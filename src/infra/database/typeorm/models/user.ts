@@ -15,7 +15,7 @@ export class UserModel extends BaseEntity {
   @Column()
   hashedPassword!: string
 
-  @Column()
+  @Column({ nullable: true })
   token!: string
 
   mapToUser = () => {

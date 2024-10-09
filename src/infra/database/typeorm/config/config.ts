@@ -1,14 +1,19 @@
+import 'reflect-metadata'
 import { DataSourceOptions } from 'typeorm'
 import { UserModel } from '../models/user'
+import { CellModel } from '../models/cell'
+import { GridModel } from '../models/grid'
 
-const entities = [UserModel]
+export const entities = [UserModel]
 
 export const SqliteConfig: DataSourceOptions = {
   type: 'sqlite',
   database: 'test-sqlite',
-  entities,
   synchronize: true,
   logging: false,
+  entities,
+  subscribers: [],
+  migrations: [],
 }
 
 export const PostgreSqlConfig: DataSourceOptions = {

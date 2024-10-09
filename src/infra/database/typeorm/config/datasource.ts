@@ -1,9 +1,8 @@
-import 'reflect-metadata'
 import { DataSource } from 'typeorm'
 import { PostgreSqlConfig, SqliteConfig } from './config'
 
 export const AppDataSource = new DataSource(
-  process.env.ENVIRONMENT === 'test' ? SqliteConfig : PostgreSqlConfig,
+  process.env.NODE_ENV === 'test' ? SqliteConfig : PostgreSqlConfig,
 )
 
 export const initializeDatabase = (callback: () => void) => {
