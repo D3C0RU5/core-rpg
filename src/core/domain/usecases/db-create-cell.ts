@@ -1,5 +1,4 @@
 import { UseCase } from './usecase'
-import { CellSnapshot } from '../entities/cell'
 
 export type InputCreateCell = {
   gridId: string
@@ -11,5 +10,5 @@ export type InputCreateCell = {
 }
 
 export abstract class ICreateCellUseCase implements UseCase {
-  abstract execute(input: InputCreateCell): Promise<CellSnapshot>
+  abstract execute(input: InputCreateCell): Promise<void>
 }

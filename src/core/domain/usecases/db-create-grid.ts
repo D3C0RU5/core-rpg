@@ -1,4 +1,3 @@
-import { GridSnapshot } from '../entities/grid'
 import { UseCase } from './usecase'
 
 export type InputCreateGrid = {
@@ -8,5 +7,5 @@ export type InputCreateGrid = {
   }
 }
 export abstract class ICreateGridUseCase implements UseCase {
-  abstract execute(input: InputCreateGrid): Promise<GridSnapshot>
+  abstract execute(input: InputCreateGrid): Promise<void>
 }

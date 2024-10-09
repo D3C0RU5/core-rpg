@@ -187,24 +187,4 @@ describe('Cell', () => {
       expect(cell.Position).toEqual(position)
     })
   })
-
-  describe('toSnapshot', () => {
-    it('should return a correct snapshot of the cell', () => {
-      const cell = createCell()
-      const snapshot = cell.toSnapshot()
-
-      expect(snapshot.cellId).toBe(cell.Id)
-      expect(snapshot.walkable).toBe(cell.Walkable)
-      expect(snapshot.position).toEqual(cell.Position)
-      expect(snapshot.character).toBeUndefined()
-    })
-
-    it('should include the character in the snapshot if it exists', () => {
-      const cell = createCell()
-      cell.addCharacter(createCharacter())
-      const snapshot = cell.toSnapshot()
-
-      expect(snapshot.character).toBeDefined()
-    })
-  })
 })

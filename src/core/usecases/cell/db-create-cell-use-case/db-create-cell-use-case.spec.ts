@@ -172,15 +172,15 @@ describe('DbCreateCellUseCase', () => {
     await expect(act()).rejects.toThrow('any error')
   })
 
-  it('Return snapshot if successful', async () => {
+  it('Return call cellCreateSpy if successful', async () => {
     // Arrange
     const { sut } = makeSut()
     const input = makeInput()
 
     // Act
-    const snapshot = await sut.execute(input)
+    await sut.execute(input)
 
     // Assert
-    expect(snapshot).toEqual(fakeCell().toSnapshot())
+    expect(cellCreateSpy).toHaveBeenCalledWith(fakeCell())
   })
 })

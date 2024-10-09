@@ -44,15 +44,4 @@ describe('Position unit test', () => {
       expect(position.Column).toBe(columnValue)
     })
   })
-
-  describe('When toSnapshot', () => {
-    it('Should return raw object', () => {
-      const position = makePosition()
-
-      expect(position.toSnapshot()).toEqual({
-        row: rowValue,
-        column: columnValue,
-      })
-    })
-  })
 })

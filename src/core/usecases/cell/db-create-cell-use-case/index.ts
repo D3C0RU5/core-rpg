@@ -1,4 +1,4 @@
-import { Cell, CellSnapshot } from '../../../domain/entities/cell'
+import { Cell } from '../../../domain/entities/cell'
 import {
   ICreateCellUseCase,
   InputCreateCell,
@@ -20,7 +20,7 @@ export class DbCreateCellUseCase implements ICreateCellUseCase {
     private readonly cellRepository: ICellRepositoryAggregate,
   ) {}
 
-  async execute(input: InputCreateCell): Promise<CellSnapshot> {
+  async execute(input: InputCreateCell): Promise<void> {
     const { gridId, position, walkable } = input
 
     const gridExists = await this.gridRepository.exists(gridId)
@@ -39,7 +39,5 @@ export class DbCreateCellUseCase implements ICreateCellUseCase {
       throw invalidGridInPositionError(cell.Position)
     }
     await this.cellRepository.create(cell)
-
-    return cell.toSnapshot()
   }
 }

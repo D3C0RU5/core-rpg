@@ -7,6 +7,6 @@ export const invalidGridInPositionError = (
   return new InvalidValueError(
     'CELL.INVALID-POSITION',
     'Is not possible create a cell in this position',
-    { position: position.toSnapshot() },
+    { position: position },
   )
 }

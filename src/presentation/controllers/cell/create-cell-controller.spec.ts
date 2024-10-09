@@ -5,14 +5,11 @@ import {
   createBaseError,
   createGenericError,
 } from '../../../utils/factories/error-factory'
-import { CellSnapshot } from '../../../core/domain/entities/cell'
 import { ICreateCellUseCase } from '../../../core/domain/usecases/db-create-cell'
 
-const fakeCreatedCell = createCell().toSnapshot()
-
 class CreateCellUseCaseStub implements ICreateCellUseCase {
-  execute(): Promise<CellSnapshot> {
-    return Promise.resolve(fakeCreatedCell)
+  execute(): Promise<void> {
+    return Promise.resolve()
   }
 }
 
@@ -54,7 +51,6 @@ describe('CreateCellController', () => {
 
     // Assert
     expect(result.statusCode).toBe(200)
-    expect(result.body).toEqual(fakeCreatedCell)
   })
 
   it('return 400 with error when gridId is missing', async () => {

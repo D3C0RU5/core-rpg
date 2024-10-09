@@ -66,18 +66,6 @@ describe('Character unit test', () => {
       expect(character.Strength).toBe(15)
     })
   })
-
-  describe('toSnapshot method', () => {
-    it('should return a correct snapshot of the character', () => {
-      const character = Character.create(100, 10, 15)
-      const snapshot = character.toSnapshot()
-
-      expect(snapshot.characterId).toBe(character.Id)
-      expect(snapshot.health).toBe(character.Health)
-      expect(snapshot.movimentation).toBe(character.Movimentation)
-      expect(snapshot.strength).toBe(character.Strength)
-    })
-  })
 })
 
 describe('Factory Tests', () => {

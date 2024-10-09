@@ -44,15 +44,4 @@ describe('Size unit test', () => {
       expect(size.Columns).toBe(columnsValue)
     })
   })
-
-  describe('When toSnapshot', () => {
-    it('Should return raw object', () => {
-      const size = makeSize()
-
-      expect(size.toSnapshot()).toEqual({
-        rows: rowsValue,
-        colums: columnsValue,
-      })
-    })
-  })
 })

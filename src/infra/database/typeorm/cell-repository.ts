@@ -15,7 +15,7 @@ export class CellRepository
   }
 
   async create(cell: Cell): Promise<void> {
-    this.repository.insert({
+    await this.repository.insert({
       cellId: cell.Id,
       gridId: cell.GridId,
       row: cell.Position.Row,

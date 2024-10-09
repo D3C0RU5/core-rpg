@@ -9,13 +9,6 @@ export type CharacterProps = {
   strength: number
 }
 
-export type CharacterSnapshot = {
-  characterId: string
-  health: number
-  movimentation: number
-  strength: number
-}
-
 export class Character {
   private readonly characterId: string
   private readonly health: number
@@ -49,15 +42,6 @@ export class Character {
 
   get Strength() {
     return this.strength
-  }
-
-  toSnapshot(): CharacterSnapshot {
-    return {
-      characterId: this.characterId,
-      health: this.health,
-      movimentation: this.movimentation,
-      strength: this.strength,
-    }
   }
 }
 

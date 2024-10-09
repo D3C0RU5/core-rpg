@@ -32,8 +32,8 @@ const makeInput = (): InputCreateGrid => {
   }
 }
 
-const fakeSize = new Size(10, 5)
-const fakeGrid = new Grid('grid-id', fakeSize)
+const fakeSize = new Size({ columns: 10, rows: 5 })
+const fakeGrid = new Grid({ gridId: 'grid-id', size: fakeSize })
 
 describe('DbCreateGridUseCase', () => {
   let sizeCreateSpy: jest.SpyInstance
@@ -87,7 +87,7 @@ describe('DbCreateGridUseCase', () => {
     const createSpy = jest.spyOn(createRepositoryStub, 'create')
 
     // Act
-    const result = await sut.execute(input)
+    await sut.execute(input)
 
     // Assert
     expect(sizeCreateSpy).toHaveBeenCalledWith(
@@ -96,6 +96,5 @@ describe('DbCreateGridUseCase', () => {
     )
     expect(gridCreateSpy).toHaveBeenCalledWith(fakeSize)
     expect(createSpy).toHaveBeenCalledWith(fakeGrid)
-    expect(result).toEqual(fakeGrid.toSnapshot())
   })
 })

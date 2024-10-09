@@ -5,11 +5,6 @@ export type PositionProps = {
   column: number
 }
 
-export type PositionSnapshot = {
-  row: number
-  column: number
-}
-
 export class Position {
   private readonly row: number
   private readonly column: number
@@ -31,12 +26,5 @@ export class Position {
 
   get Column(): number {
     return this.column
-  }
-
-  toSnapshot(): PositionSnapshot {
-    return {
-      row: this.row,
-      column: this.column,
-    }
   }
 }

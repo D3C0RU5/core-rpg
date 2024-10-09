@@ -1,4 +1,4 @@
-import { Character, CharacterSnapshot } from '../character'
+import { Character } from '../character'
 import { Position } from '../../value-objects/position'
 
 export type CellProps = {
@@ -68,20 +68,4 @@ export class Cell {
   get Character(): Character | null {
     return this.character
   }
-
-  toSnapshot(): CellSnapshot {
-    return {
-      cellId: this.cellId,
-      walkable: this.walkable,
-      position: this.position,
-      character: this.character?.toSnapshot(),
-    }
-  }
-}
-
-export type CellSnapshot = {
-  cellId: string
-  walkable: boolean
-  position: Position
-  character: CharacterSnapshot | undefined
 }

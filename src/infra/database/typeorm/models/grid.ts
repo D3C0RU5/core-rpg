@@ -14,6 +14,9 @@ export class GridModel extends BaseEntity {
   columns!: number
 
   mapToUser = () => {
-    return new Grid(this.gridId, new Size(this.rows, this.columns))
+    return new Grid({
+      gridId: this.gridId,
+      size: new Size({ rows: this.rows, columns: this.columns }),
+    })
   }
 }
