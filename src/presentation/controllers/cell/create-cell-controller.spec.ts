@@ -1,5 +1,4 @@
 import { CreateCellController } from './create-cell-controller'
-import { createCell } from '../../../utils/factories/cell-factory'
 import { MissingPropertyError } from '../errors/missing-property-error'
 import {
   createBaseError,
