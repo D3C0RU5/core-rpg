@@ -174,13 +174,15 @@ describe('DbCreateCellUseCase', () => {
 
   it('Return call cellCreateSpy if successful', async () => {
     // Arrange
-    const { sut } = makeSut()
+    const { sut, cellRepositoryStub } = makeSut()
     const input = makeInput()
+
+    const createCellRepositorySpy = jest.spyOn(cellRepositoryStub, 'create')
 
     // Act
     await sut.execute(input)
 
     // Assert
-    expect(cellCreateSpy).toHaveBeenCalledWith(fakeCell())
+    expect(createCellRepositorySpy).toHaveBeenCalledWith(fakeCell())
   })
 })
