@@ -17,7 +17,7 @@ export class BaseError extends Error {
     Object.setPrototypeOf(this, BaseError.prototype)
   }
 
-  toSnapshot() {
+  toJson() {
     const { name, key, message, details } = this
     return {
       name,

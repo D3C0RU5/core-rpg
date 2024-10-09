@@ -10,7 +10,7 @@ describe('invalidGridInPositionError unit test', () => {
     const error = invalidGridInPositionError(position)
 
     // Assert
-    expect(error.toSnapshot()).toEqual({
+    expect(error.toJson()).toEqual({
       name: 'InvalidValueError',
       key: 'CELL.INVALID-POSITION',
       message: 'Is not possible create a cell in this position',

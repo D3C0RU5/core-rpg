@@ -6,7 +6,7 @@ describe('emailAlreadyInUseError unit test', () => {
 
     const erro = emailAlreadyInUseError(email)
 
-    expect(erro.toSnapshot()).toEqual({
+    expect(erro.toJson()).toEqual({
       name: 'InvalidValueError',
       key: 'EMAIL.EMAIL_ALREADY_TAKEN',
       message: 'Email already in use by another user.',
