@@ -4,7 +4,7 @@ import { UserModel } from '../models/user'
 import { CellModel } from '../models/cell'
 import { GridModel } from '../models/grid'
 
-export const entities = [UserModel]
+export const entities = [UserModel, CellModel, GridModel]
 
 export const SqliteConfig: DataSourceOptions = {
   type: 'sqlite',
