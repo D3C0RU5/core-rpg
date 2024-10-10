@@ -14,7 +14,7 @@ export class User {
   private readonly name: string
   private readonly email: Email
   private readonly hashedPassword: string
-  private readonly token?: string
+  private token?: string
 
   constructor({ userId, name, email, hashedPassword, token }: UserProps) {
     this.userId = new UUID(userId)
@@ -48,5 +48,9 @@ export class User {
 
   get Token(): string | undefined {
     return this.token
+  }
+
+  setToken(value: string) {
+    this.token = value
   }
 }
