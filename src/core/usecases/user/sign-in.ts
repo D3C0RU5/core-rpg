@@ -2,13 +2,13 @@ import { ISignInUseCase, SignInProps } from '../../domain/usecases/sign-in-user'
 import { HashCompare } from '../protocols/criptography/compare'
 import { ITokenGenerator } from '../protocols/criptography/token-generator'
 import { IUserRepositoryGetByEmail } from '../protocols/user/get-user-by-email'
-import { IUserRepositoryUpdateToken } from '../protocols/user/update-token'
+import { IUserRepositoryUpdate } from '../protocols/user/update'
 import { authenticationError } from './errors/authentication-error'
 
 export class SignInUseCase implements ISignInUseCase {
   constructor(
     private readonly userRepository: IUserRepositoryGetByEmail &
-      IUserRepositoryUpdateToken,
+      IUserRepositoryUpdate,
     private readonly hasher: HashCompare,
     private readonly tokenGenerator: ITokenGenerator,
   ) {}
@@ -34,7 +34,7 @@ export class SignInUseCase implements ISignInUseCase {
     const token = await this.tokenGenerator.generate(payload)
     user.setToken(token)
 
-    this.userRepository.updateToken(user)
+    this.userRepository.update(user)
 
     return token
   }

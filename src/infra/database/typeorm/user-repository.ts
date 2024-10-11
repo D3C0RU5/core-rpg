@@ -6,16 +6,16 @@ import { Repository } from 'typeorm'
 import { AppDataSource } from './config/datasource'
 import { IUserRepositoryGetAll } from '../../../core/usecases/protocols/user/user-repository-get-all'
 import { IUserRepositoryGetByEmail } from '../../../core/usecases/protocols/user/get-user-by-email'
-import { IUserRepositoryUpdateToken } from '../../../core/usecases/protocols/user/update-token'
+import { IUserRepositoryUpdate } from '../../../core/usecases/protocols/user/update'
 
 export class UserRepository
   implements
     IUserRepositoryCreate,
     IUserRepositoryEmailInUse,
     IUserRepositoryGetAll,
-    IUserRepositoryGetByEmail
+    IUserRepositoryGetByEmail,
+    IUserRepositoryUpdate
 {
-  // IUserRepositoryUpdateToken
   private readonly repository: Repository<UserModel>
 
   constructor() {
@@ -42,5 +42,8 @@ export class UserRepository
     return user?.mapToEntity() || null
   }
 
-  // async updateToken(user: User): Promise<void> {}
+  async update(user: User): Promise<void> {
+    const userModel = UserModel.fromEntity(user)
+    await this.repository.update({ userId: user.Id }, userModel)
+  }
 }

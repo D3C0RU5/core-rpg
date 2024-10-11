@@ -4,19 +4,19 @@ import { User } from '../../domain/entities/user/user'
 import { HashCompare } from '../protocols/criptography/compare'
 import { ITokenGenerator } from '../protocols/criptography/token-generator'
 import { IUserRepositoryGetByEmail } from '../protocols/user/get-user-by-email'
-import { IUserRepositoryUpdateToken } from '../protocols/user/update-token'
+import { IUserRepositoryUpdate } from '../protocols/user/update'
 import { SignInUseCase } from './sign-in'
 import { SignInProps } from '../../domain/usecases/sign-in-user'
 import { authenticationError } from './errors/authentication-error'
 
 const fakeUserByEmail = createUser()
 class UserRepositoryStub
-  implements IUserRepositoryGetByEmail, IUserRepositoryUpdateToken
+  implements IUserRepositoryGetByEmail, IUserRepositoryUpdate
 {
   async getByEmail(email: string): Promise<User | null> {
     return Promise.resolve(fakeUserByEmail)
   }
-  async updateToken(user: User): Promise<void> {
+  async update(user: User): Promise<void> {
     return Promise.resolve()
   }
 }
@@ -154,17 +154,17 @@ describe('SignInUseCase unit test', () => {
     await expect(sut.execute(input)).rejects.toThrow(error)
   })
 
-  it('should call updateToken with correctParams', async () => {
+  it('should call update with correctParams', async () => {
     // Arrange
     const { sut, userRepositoryStub } = makeSut()
     const input = makeInput()
-    const updateTokenSpy = jest.spyOn(userRepositoryStub, 'updateToken')
+    const updateSpy = jest.spyOn(userRepositoryStub, 'update')
 
     // Act
     await sut.execute(input)
 
     // Assert
-    expect(updateTokenSpy).toHaveBeenCalledWith({
+    expect(updateSpy).toHaveBeenCalledWith({
       ...fakeUserByEmail,
       token: fakeToken,
     })

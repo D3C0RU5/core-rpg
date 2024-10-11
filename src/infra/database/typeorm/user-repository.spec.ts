@@ -130,4 +130,24 @@ describe('UserRepository', () => {
       expect(result).toEqual(user)
     })
   })
+
+  describe('When call update', () => {
+    it('Update user token if user exists', async () => {
+      // Arrange
+      const sut = makeSut()
+      const userOldValues = createUser()
+      await repository.insert(UserModel.fromEntity(userOldValues))
+
+      const userNewValues = createUser({ userId: userOldValues.Id })
+
+      // Act
+      await sut.update(userNewValues)
+
+      // Assert
+      const updatedUser = await repository.findOneBy({
+        userId: userOldValues.Id,
+      })
+      expect(updatedUser).toEqual(UserModel.fromEntity(userNewValues))
+    })
+  })
 })
