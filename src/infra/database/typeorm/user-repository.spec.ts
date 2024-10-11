@@ -2,6 +2,7 @@ import { createUser } from '../../../utils/factories/user-factory'
 import { UserRepository } from './user-repository'
 import { AppDataSource } from './config/datasource'
 import { UserModel } from './models/user'
+import { faker } from '@faker-js/faker/.'
 
 const makeSut = () => new UserRepository()
 const repository = AppDataSource.getRepository(UserModel)
@@ -98,6 +99,35 @@ describe('UserRepository', () => {
 
       // Assert
       expect(result.length).toBe(2)
+    })
+  })
+  describe('When call getByEmail', () => {
+    it('Return empty when user exists with received email', async () => {
+      // Arrange
+      const sut = makeSut()
+      const email = faker.internet.email()
+
+      // Act
+      const result = await sut.getByEmail(email)
+
+      // Assert
+      expect(result).toBe(null)
+    })
+
+    it('Return existing user with received email', async () => {
+      // Arrange
+      const sut = makeSut()
+      const email = faker.internet.email()
+
+      const user = createUser({ email })
+      const userModel = UserModel.fromEntity(user)
+      await repository.insert(userModel)
+
+      // Act
+      const result = await sut.getByEmail(email)
+
+      // Assert
+      expect(result).toEqual(user)
     })
   })
 })

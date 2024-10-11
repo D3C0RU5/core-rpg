@@ -16,9 +16,9 @@ export class UserModel extends BaseEntity {
   hashedPassword!: string
 
   @Column({ nullable: true })
-  token!: string
+  token?: string
 
-  mapToUser = () => {
+  mapToEntity() {
     return new User({
       userId: this.userId,
       name: this.name,
@@ -26,5 +26,16 @@ export class UserModel extends BaseEntity {
       hashedPassword: this.hashedPassword,
       token: this.token,
     })
+  }
+
+  static fromEntity(user: User): UserModel {
+    const userModel = new UserModel()
+    userModel.userId = user.Id
+    userModel.name = user.Name
+    userModel.email = user.Email
+    userModel.hashedPassword = user.HashedPassword
+    userModel.token = user.Token
+
+    return userModel
   }
 }

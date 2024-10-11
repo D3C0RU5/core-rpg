@@ -5,13 +5,17 @@ import { IUserRepositoryEmailInUse } from '../../../core/usecases/protocols/user
 import { Repository } from 'typeorm'
 import { AppDataSource } from './config/datasource'
 import { IUserRepositoryGetAll } from '../../../core/usecases/protocols/user/user-repository-get-all'
+import { IUserRepositoryGetByEmail } from '../../../core/usecases/protocols/user/get-user-by-email'
+import { IUserRepositoryUpdateToken } from '../../../core/usecases/protocols/user/update-token'
 
 export class UserRepository
   implements
     IUserRepositoryCreate,
     IUserRepositoryEmailInUse,
-    IUserRepositoryGetAll
+    IUserRepositoryGetAll,
+    IUserRepositoryGetByEmail
 {
+  // IUserRepositoryUpdateToken
   private readonly repository: Repository<UserModel>
 
   constructor() {
@@ -19,12 +23,8 @@ export class UserRepository
   }
 
   async create(user: User): Promise<void> {
-    await this.repository.insert({
-      userId: user.Id,
-      name: user.Name,
-      email: user.Email,
-      hashedPassword: user.HashedPassword,
-    })
+    const userModel = UserModel.fromEntity(user)
+    await this.repository.insert(userModel)
   }
 
   async isEmailInUse(value: string): Promise<boolean> {
@@ -33,6 +33,14 @@ export class UserRepository
 
   async getAll(): Promise<User[]> {
     const allUsersFromDb = await this.repository.find()
-    return allUsersFromDb.map(_user => _user.mapToUser())
+    return allUsersFromDb.map(_user => _user.mapToEntity())
   }
+
+  async getByEmail(email: string): Promise<User | null> {
+    const user = await this.repository.findOneBy({ email })
+
+    return user?.mapToEntity() || null
+  }
+
+  // async updateToken(user: User): Promise<void> {}
 }
