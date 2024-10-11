@@ -77,7 +77,7 @@ describe('CellRepository', () => {
       expect(cellExists).toBe(false)
     })
 
-    it('Should return false when not exists cell in position', async () => {
+    it('Return true when exists cell in position', async () => {
       // Arrange
       const sut = makeSut()
       const position = createPosition({ column: 1, row: 1 })
