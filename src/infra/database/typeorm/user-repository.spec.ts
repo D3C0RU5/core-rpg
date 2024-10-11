@@ -3,6 +3,7 @@ import { UserRepository } from './user-repository'
 import { AppDataSource } from './config/datasource'
 import { UserModel } from './models/user'
 import { faker } from '@faker-js/faker/.'
+import { userNotFound } from './errors/user-not-found-error'
 
 const makeSut = () => new UserRepository()
 const repository = AppDataSource.getRepository(UserModel)
@@ -148,6 +149,15 @@ describe('UserRepository', () => {
         userId: userOldValues.Id,
       })
       expect(updatedUser).toEqual(UserModel.fromEntity(userNewValues))
+    })
+
+    it('Throws if user not exists', async () => {
+      // Arrange
+      const sut = makeSut()
+      const user = createUser()
+
+      // Act/Assert
+      await expect(sut.update(user)).rejects.toThrow(userNotFound())
     })
   })
 })

@@ -7,6 +7,7 @@ import { AppDataSource } from './config/datasource'
 import { IUserRepositoryGetAll } from '../../../core/usecases/protocols/user/user-repository-get-all'
 import { IUserRepositoryGetByEmail } from '../../../core/usecases/protocols/user/get-user-by-email'
 import { IUserRepositoryUpdate } from '../../../core/usecases/protocols/user/update'
+import { userNotFound } from './errors/user-not-found-error'
 
 export class UserRepository
   implements
@@ -44,6 +45,12 @@ export class UserRepository
 
   async update(user: User): Promise<void> {
     const userModel = UserModel.fromEntity(user)
-    await this.repository.update({ userId: user.Id }, userModel)
+    const updatedResult = await this.repository.update(
+      { userId: user.Id },
+      userModel,
+    )
+    if (updatedResult.affected === 0) {
+      throw userNotFound()
+    }
   }
 }
