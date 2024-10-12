@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --config .env src/main/server.ts",
+    "dev": "npm run dev:up & nodemon --config .env src/main/server.ts",
     "test": "npx jest -c ./jest-unit.config.js --runInBand",
     "integration:test": "npx jest -c ./jest-integration.config.js",
     "dev:up": "docker compose -f ./docker/dev/docker-compose.yml up"

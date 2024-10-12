@@ -1,10 +1,6 @@
 import { JwtAdapter } from './jwt-adapter'
 import jwt from 'jsonwebtoken'
 
-jest.mock('jsonwebtoken', () => ({
-  sign: jest.fn().mockReturnValue('fake-token'),
-}))
-
 const secret = 'fake-secret'
 const fakePayload = { user: 'user-name' }
 const expirationHours = 1
@@ -17,26 +13,7 @@ const makeSut = () => {
 }
 
 describe('JwtAdapter', () => {
-  let signSpy: jest.SpyInstance
-
-  beforeEach(() => {
-    signSpy = jest.spyOn(jwt, 'sign')
-    jest.clearAllMocks()
-  })
-
   describe('When calling generate', () => {
-    it('Should call sign with correct params', () => {
-      // Arrange
-      const { sut } = makeSut()
-      const options = { expiresIn: `${expirationHours}h` }
-
-      // Act
-      sut.generate(fakePayload)
-
-      // Assert
-      expect(signSpy).toHaveBeenCalledWith(fakePayload, secret, options)
-    })
-
     it('Should return generated token', async () => {
       // Arrange
       const { sut } = makeSut()
@@ -45,7 +22,37 @@ describe('JwtAdapter', () => {
       const token = await sut.generate(fakePayload)
 
       // Assert
-      expect(token).toBe('fake-token')
+      const result = jwt.decode(token) as object
+      expect(result).toEqual(
+        expect.objectContaining({ user: fakePayload.user }),
+      )
+    })
+  })
+
+  describe('When calling verify', () => {
+    it('Should return true when is valid', async () => {
+      // Arrange
+      const { sut } = makeSut()
+      const token = await sut.generate(fakePayload)
+      // Act
+      const payload = sut.verify(token)
+
+      // Assert
+      expect(payload).toEqual(
+        expect.objectContaining({ user: fakePayload.user }),
+      )
+    })
+    it('Should throw when is invalid', async () => {
+      // Arrange
+      const { sut } = makeSut()
+      const token = 'invalid token'
+
+      // Act
+
+      // Assert
+      expect(() => sut.verify(token)).toThrow(
+        'something goes wrong when verifing token',
+      )
     })
   })
 })

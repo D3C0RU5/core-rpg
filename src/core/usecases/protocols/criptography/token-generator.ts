@@ -1,3 +1,5 @@
+import { JwtPayload } from './interface/jwt-payload'
+
 export interface ITokenGenerator {
-  generate(payload: object): Promise<string>
+  generate(payload: JwtPayload): Promise<string>
 }
