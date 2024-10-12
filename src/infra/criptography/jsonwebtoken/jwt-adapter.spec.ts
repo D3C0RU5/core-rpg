@@ -2,17 +2,16 @@ import { JwtAdapter } from './jwt-adapter'
 import jwt from 'jsonwebtoken'
 
 jest.mock('jsonwebtoken', () => ({
-  sign: jest.fn(),
+  sign: jest.fn().mockReturnValue('fake-token'),
 }))
 
 const secret = 'fake-secret'
 const fakePayload = { user: 'user-name' }
-const fakeOptions: jwt.SignOptions = { expiresIn: '1h' }
-const makeSut = () => {
-  const sut = new JwtAdapter(secret, fakeOptions)
+const expirationHours = 1
 
+const makeSut = () => {
+  const sut = new JwtAdapter(secret, expirationHours)
   return {
-    secret,
     sut,
   }
 }
@@ -21,33 +20,32 @@ describe('JwtAdapter', () => {
   let signSpy: jest.SpyInstance
 
   beforeEach(() => {
-    signSpy = jwt.sign as jest.Mock
+    signSpy = jest.spyOn(jwt, 'sign')
     jest.clearAllMocks()
   })
 
-  describe('When call generate', () => {
+  describe('When calling generate', () => {
     it('Should call sign with correct params', () => {
       // Arrange
       const { sut } = makeSut()
+      const options = { expiresIn: `${expirationHours}h` }
 
       // Act
       sut.generate(fakePayload)
 
       // Assert
-      expect(signSpy).toHaveBeenCalledWith(fakePayload, secret, fakeOptions)
+      expect(signSpy).toHaveBeenCalledWith(fakePayload, secret, options)
     })
 
-    it('Should return generated token', () => {
+    it('Should return generated token', async () => {
       // Arrange
       const { sut } = makeSut()
-      const fakeToken = 'any-secret'
-      signSpy.mockReturnValue(fakeToken)
 
       // Act
-      sut.generate(fakePayload)
+      const token = await sut.generate(fakePayload)
 
       // Assert
-      expect(signSpy).toHaveBeenCalledWith(fakePayload, secret, fakeOptions)
+      expect(token).toBe('fake-token')
     })
   })
 })
