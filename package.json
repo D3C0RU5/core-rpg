@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "npm run dev:up & nodemon --config .env src/main/server.ts",
     "test": "npx jest -c ./jest-unit.config.js --runInBand",
+    "test:coverage": "npm run test -- --coverage",
     "integration:test": "npx jest -c ./jest-integration.config.js",
     "dev:up": "docker compose -f ./docker/dev/docker-compose.yml up"
   },

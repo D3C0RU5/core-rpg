@@ -20,14 +20,14 @@ export const serverError = (error: unknown): HttpResponse => ({
 })
 
 export const handleError = (error: unknown): HttpResponse => {
-  if (error instanceof BaseError) {
-    return {
-      statusCode: 400,
-      body: error.toJson(),
-    }
-  } else if (error instanceof NotFoundError) {
+  if (error instanceof NotFoundError) {
     return {
       statusCode: 404,
+      body: error.toJson(),
+    }
+  } else if (error instanceof BaseError) {
+    return {
+      statusCode: 400,
       body: error.toJson(),
     }
   } else {
