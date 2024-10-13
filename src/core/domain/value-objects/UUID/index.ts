@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 
 export class UUID {
-  private value: string
+  private readonly value: string
 
   constructor(value: string) {
     this.value = value
