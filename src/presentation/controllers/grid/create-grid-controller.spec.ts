@@ -3,45 +3,43 @@ import {
   createBaseError,
   createGenericError,
 } from '../../../utils/factories/error-factory'
-import { SignUpController } from './sign-up-controller'
 import {
-  ICreateUserUseCase,
-  InputCreateUser,
-} from '../../../core/domain/usecases/db-create-user'
+  ICreateGridUseCase,
+  InputCreateGrid,
+} from '../../../core/domain/usecases/db-create-grid'
+import { CreateGridController } from './create-grid-controller'
+import { faker } from '@faker-js/faker/.'
 
-class CreateUserUseCaseStub implements ICreateUserUseCase {
-  async execute(input: InputCreateUser): Promise<void> {
-    Promise.resolve()
+const fakeGridId = faker.string.uuid()
+class DbCreateGridUseCaseStub implements ICreateGridUseCase {
+  async execute(input: InputCreateGrid): Promise<string> {
+    return Promise.resolve(fakeGridId)
   }
 }
 
 const makeSut = () => {
-  const useCaseStub = new CreateUserUseCaseStub()
-  const sut = new SignUpController(useCaseStub)
+  const useCaseStub = new DbCreateGridUseCaseStub()
+  const sut = new CreateGridController(useCaseStub)
 
   return { useCaseStub, sut }
 }
 
 const makeFakeRequest = (
   body: {
-    name?: string
-    email?: string
-    password?: string
-    passwordConfirmation?: string
+    rows?: number
+    columns?: number
   } = {},
 ) => {
   return {
     body: {
-      name: 'any_name',
-      email: 'any_email@mail.com',
-      password: 'any-password',
-      passwordConfirmation: 'any-password',
+      rows: 1,
+      columns: 2,
       ...body,
     },
   }
 }
 
-describe('SignUpController', () => {
+describe('CreateGridController', () => {
   it('return OK when has success', async () => {
     // Arrange
     const { sut } = makeSut()
@@ -52,9 +50,10 @@ describe('SignUpController', () => {
 
     // Assert
     expect(result.statusCode).toBe(200)
+    expect(result.body.gridId).toBe(fakeGridId)
   })
 
-  it('signInUseCase.execute calls corretly', async () => {
+  it('usecase calls corretly', async () => {
     // Arrange
     const { sut, useCaseStub } = makeSut()
     const request = makeFakeRequest()
@@ -65,71 +64,36 @@ describe('SignUpController', () => {
 
     // Assert
     expect(executeSpy).toHaveBeenCalledWith({
-      name: request.body.name,
-      email: request.body.email,
-      password: request.body.password,
+      size: { rows: request.body.rows, columns: request.body.columns },
     })
   })
 
-  it('return 400 with error when name is missing', async () => {
+  it('return 400 with error when rows is missing', async () => {
     // Arrange
     const { sut } = makeSut()
-    const invalidRequest = makeFakeRequest({ name: undefined })
+    const invalidRequest = makeFakeRequest({ rows: undefined })
 
     // Act
     const result = await sut.handle(invalidRequest)
 
     // Assert
     expect(result.statusCode).toBe(400)
-    const expectedError = new MissingPropertyError('body', 'name')
+    const expectedError = new MissingPropertyError('body', 'rows')
     expect(result.body.name).toBe(expectedError.name)
     expect(result.body.message).toBe(expectedError.message)
   })
 
-  it('return 400 with error when email is missing', async () => {
+  it('return 400 with error when columns is missing', async () => {
     // Arrange
     const { sut } = makeSut()
-    const invalidRequest = makeFakeRequest({ email: undefined })
+    const invalidRequest = makeFakeRequest({ columns: undefined })
 
     // Act
     const result = await sut.handle(invalidRequest)
 
     // Assert
     expect(result.statusCode).toBe(400)
-    const expectedError = new MissingPropertyError('body', 'email')
-    expect(result.body.name).toBe(expectedError.name)
-    expect(result.body.message).toBe(expectedError.message)
-  })
-
-  it('return 400 with error when password is missing', async () => {
-    // Arrange
-    const { sut } = makeSut()
-    const invalidRequest = makeFakeRequest({ password: undefined })
-
-    // Act
-    const result = await sut.handle(invalidRequest)
-
-    // Assert
-    expect(result.statusCode).toBe(400)
-    const expectedError = new MissingPropertyError('body', 'password')
-    expect(result.body.name).toBe(expectedError.name)
-    expect(result.body.message).toBe(expectedError.message)
-  })
-
-  it('return 400 with error when passwordConfirmation is missing', async () => {
-    // Arrange
-    const { sut } = makeSut()
-    const invalidRequest = makeFakeRequest({ passwordConfirmation: undefined })
-
-    // Act
-    const result = await sut.handle(invalidRequest)
-
-    // Assert
-    expect(result.statusCode).toBe(400)
-    const expectedError = new MissingPropertyError(
-      'body',
-      'passwordConfirmation',
-    )
+    const expectedError = new MissingPropertyError('body', 'columns')
     expect(result.body.name).toBe(expectedError.name)
     expect(result.body.message).toBe(expectedError.message)
   })

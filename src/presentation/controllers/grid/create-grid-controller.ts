@@ -1,19 +1,20 @@
-import { DbCreateGridUseCase } from '../../../core/usecases/grid/db-create-grid-use-case'
-import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
+import { ICreateGridUseCase } from '../../../core/domain/usecases/db-create-grid'
+import { handleError, ok } from '../../helpers/http/http-helper'
 import { Controller } from '../../protocols/controller'
 import { HttpRequest, HttpResponse } from '../../protocols/http'
+import { MissingPropertyError } from '../errors/missing-property-error'
 
 export class CreateGridController implements Controller {
-  constructor(private readonly createGrid: DbCreateGridUseCase) {}
+  constructor(private readonly createGrid: ICreateGridUseCase) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { rows, columns } = httpRequest.body
       if (!rows) {
-        return badRequest(new Error('Missing rows'))
+        throw new MissingPropertyError('body', 'rows')
       }
       if (!columns) {
-        return badRequest(new Error('Missing columns'))
+        throw new MissingPropertyError('body', 'columns')
       }
       const gridId = await this.createGrid.execute({
         size: { rows, columns },
@@ -21,7 +22,7 @@ export class CreateGridController implements Controller {
 
       return ok({ gridId })
     } catch (error) {
-      return serverError(error)
+      return handleError(error)
     }
   }
 }
