@@ -9,16 +9,6 @@ export const ok = (data?: any): HttpResponse => ({
   body: data,
 })
 
-export const badRequest = (error: Error): HttpResponse => ({
-  statusCode: 400,
-  body: { message: error.message, name: error.name },
-})
-
-export const serverError = (error: unknown): HttpResponse => ({
-  statusCode: 500,
-  body: new ServerError(error instanceof Error ? error.stack : undefined),
-})
-
 export const handleError = (error: unknown): HttpResponse => {
   if (error instanceof NotFoundError) {
     return {

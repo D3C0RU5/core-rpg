@@ -39,5 +39,17 @@ describe('Http helpers', () => {
       expect(response.statusCode).toBe(500)
       expect(response.body).toBeDefined()
     })
+
+    it('should return status 500 when is object', () => {
+      // Arrange
+      const error = {}
+
+      // Act
+      const response = handleError(error)
+
+      // Assert
+      expect(response.statusCode).toBe(500)
+      expect(response.body).toBeUndefined()
+    })
   })
 })
