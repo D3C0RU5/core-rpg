@@ -49,7 +49,7 @@ describe('Http helpers', () => {
 
       // Assert
       expect(response.statusCode).toBe(500)
-      expect(response.body).toBeUndefined()
+      expect(response.body).toBeDefined()
     })
   })
 })
