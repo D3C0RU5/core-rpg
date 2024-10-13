@@ -8,6 +8,7 @@ import {
   ICreateUserUseCase,
   InputCreateUser,
 } from '../../../core/domain/usecases/db-create-user'
+import { InvalidPropertyError } from '../errors/invalid-property-error'
 
 class CreateUserUseCaseStub implements ICreateUserUseCase {
   async execute(input: InputCreateUser): Promise<void> {
@@ -130,6 +131,26 @@ describe('SignUpController', () => {
       'body',
       'passwordConfirmation',
     )
+    expect(result.body.name).toBe(expectedError.name)
+    expect(result.body.message).toBe(expectedError.message)
+  })
+
+  it('return 400 with error when password is different then passwordConfirmation is missing', async () => {
+    // Arrange
+    const { sut } = makeSut()
+    const invalidRequest = makeFakeRequest({
+      password: 'any_password',
+      passwordConfirmation: 'invalid-password',
+    })
+
+    // Act
+    const result = await sut.handle(invalidRequest)
+
+    // Assert
+    expect(result.statusCode).toBe(400)
+    const expectedError = new InvalidPropertyError('password', {
+      message: 'Password not matches with confirmation',
+    })
     expect(result.body.name).toBe(expectedError.name)
     expect(result.body.message).toBe(expectedError.message)
   })
