@@ -1,5 +1,5 @@
-import { JwtPayload } from './interface/jwt-payload'
+import { UserPayload } from './interface/user-payload'
 
 export interface ITokenVerifier {
-  verify(token: string): JwtPayload
+  verify(token: string): UserPayload
 }

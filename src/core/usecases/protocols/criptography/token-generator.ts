@@ -1,5 +1,5 @@
-import { JwtPayload } from './interface/jwt-payload'
+import { UserPayload } from './interface/user-payload'
 
 export interface ITokenGenerator {
-  generate(payload: JwtPayload): Promise<string>
+  generate(payload: UserPayload): Promise<string>
 }

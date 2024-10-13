@@ -2,7 +2,7 @@ import { ITokenGenerator } from '../../../core/usecases/protocols/criptography/t
 import jwt from 'jsonwebtoken'
 import { ITokenVerifier } from '../../../core/usecases/protocols/criptography/token-verifier'
 import { invalidTokenError } from './error/invalid-token-error'
-import { JwtPayload } from '../../../core/usecases/protocols/criptography/interface/jwt-payload'
+import { UserPayload } from '../../../core/usecases/protocols/criptography/interface/user-payload'
 
 export class JwtAdapter implements ITokenGenerator, ITokenVerifier {
   private readonly options: jwt.SignOptions
@@ -13,13 +13,13 @@ export class JwtAdapter implements ITokenGenerator, ITokenVerifier {
     this.options = { expiresIn: `${expirationHours}h` }
   }
 
-  async generate(payload: object): Promise<string> {
+  async generate(payload: UserPayload): Promise<string> {
     return jwt.sign(payload, this.secret, this.options)
   }
 
-  verify(token: string): JwtPayload {
+  verify(token: string): UserPayload {
     try {
-      return jwt.verify(token, this.secret) as JwtPayload
+      return jwt.verify(token, this.secret) as UserPayload
     } catch (error) {
       throw invalidTokenError(error)
     }

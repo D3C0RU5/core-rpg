@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { UserPayload } from '../../core/usecases/protocols/criptography/interface/user-payload'
+
 export type HttpRequest = {
-  headers?: any
+  headers?: {
+    user?: UserPayload
+  }
   body?: any
 }
 

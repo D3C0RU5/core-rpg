@@ -2,7 +2,7 @@ import { JwtAdapter } from './jwt-adapter'
 import jwt from 'jsonwebtoken'
 
 const secret = 'fake-secret'
-const fakePayload = { user: 'user-name' }
+const fakePayload = { name: 'user-name', email: 'any-email' }
 const expirationHours = 1
 
 const makeSut = () => {
@@ -24,7 +24,7 @@ describe('JwtAdapter', () => {
       // Assert
       const result = jwt.decode(token) as object
       expect(result).toEqual(
-        expect.objectContaining({ user: fakePayload.user }),
+        expect.objectContaining({ name: fakePayload.name }),
       )
     })
   })
@@ -39,7 +39,7 @@ describe('JwtAdapter', () => {
 
       // Assert
       expect(payload).toEqual(
-        expect.objectContaining({ user: fakePayload.user }),
+        expect.objectContaining({ name: fakePayload.name }),
       )
     })
     it('Should throw when is invalid', async () => {
