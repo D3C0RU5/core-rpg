@@ -9,7 +9,8 @@ export class CreateCellController implements Controller {
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { gridId, position, walkable } = httpRequest.body
+      const { gridId, position } = httpRequest.body
+      let walkable = httpRequest.body.walkable
 
       if (!gridId) {
         throw new MissingPropertyError('body', 'gridId')
@@ -27,10 +28,14 @@ export class CreateCellController implements Controller {
         throw new MissingPropertyError('body', 'position.column')
       }
 
+      if (typeof walkable !== 'boolean') {
+        walkable = false
+      }
+
       const cellSnapshot = await this.createCell.execute({
         gridId,
         position,
-        walkable: walkable || false,
+        walkable,
       })
 
       return ok(cellSnapshot)

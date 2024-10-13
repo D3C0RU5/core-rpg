@@ -13,14 +13,14 @@ class CreateCellUseCaseStub implements ICreateCellUseCase {
 }
 
 type SutTypes = {
-  createCellUseCaseStub: ICreateCellUseCase
+  usecase: ICreateCellUseCase
   sut: CreateCellController
 }
 const makeSut = (): SutTypes => {
-  const createCellUseCaseStub = new CreateCellUseCaseStub()
-  const sut = new CreateCellController(createCellUseCaseStub)
+  const usecase = new CreateCellUseCaseStub()
+  const sut = new CreateCellController(usecase)
 
-  return { createCellUseCaseStub, sut }
+  return { usecase, sut }
 }
 
 const makeFakeRequest = (
@@ -50,6 +50,42 @@ describe('CreateCellController', () => {
 
     // Assert
     expect(result.statusCode).toBe(200)
+  })
+
+  it('calls usecase correctly', async () => {
+    // Arrange
+    const { sut, usecase } = makeSut()
+    const request = makeFakeRequest()
+    const { gridId, position, walkable } = request.body
+    const usecaseSpy = jest.spyOn(usecase, 'execute')
+
+    // Act
+    await sut.handle(request)
+
+    // Assert
+    expect(usecaseSpy).toHaveBeenCalledWith({
+      gridId,
+      position,
+      walkable,
+    })
+  })
+
+  it('calls usecase walkable with false when is invalid or undefined', async () => {
+    // Arrange
+    const { sut, usecase } = makeSut()
+    const request = makeFakeRequest({ walkable: undefined })
+    const { gridId, position } = request.body
+    const usecaseSpy = jest.spyOn(usecase, 'execute')
+
+    // Act
+    await sut.handle(request)
+
+    // Assert
+    expect(usecaseSpy).toHaveBeenCalledWith({
+      gridId,
+      position,
+      walkable: false,
+    })
   })
 
   it('return 400 with error when gridId is missing', async () => {
@@ -133,15 +169,13 @@ describe('CreateCellController', () => {
     expect(result.body.message).toBe(expectedError.message)
   })
 
-  it('return 400 when createCell throws with a BaseError', async () => {
+  it('return 400 when usecase throws with a BaseError', async () => {
     // Arrange
-    const { sut, createCellUseCaseStub } = makeSut()
+    const { sut, usecase } = makeSut()
     const request = makeFakeRequest()
 
     const expectedError = createBaseError()
-    jest
-      .spyOn(createCellUseCaseStub, 'execute')
-      .mockRejectedValueOnce(expectedError)
+    jest.spyOn(usecase, 'execute').mockRejectedValueOnce(expectedError)
 
     // Act
     const result = await sut.handle(request)
@@ -152,15 +186,13 @@ describe('CreateCellController', () => {
     expect(result.body.message).toBe(expectedError.message)
   })
 
-  it('return 500 when createCell throws with a GenericError', async () => {
+  it('return 500 when usecase throws with a GenericError', async () => {
     // Arrange
-    const { sut, createCellUseCaseStub } = makeSut()
+    const { sut, usecase } = makeSut()
     const request = makeFakeRequest()
 
     const expectedError = createGenericError()
-    jest
-      .spyOn(createCellUseCaseStub, 'execute')
-      .mockRejectedValueOnce(expectedError)
+    jest.spyOn(usecase, 'execute').mockRejectedValueOnce(expectedError)
 
     // Act
     const result = await sut.handle(request)
