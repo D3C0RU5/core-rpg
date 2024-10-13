@@ -13,7 +13,7 @@ export class GridModel extends BaseEntity {
   @Column()
   columns!: number
 
-  mapToUser = () => {
+  mapToEntity = () => {
     return new Grid({
       gridId: this.gridId,
       size: new Size({ rows: this.rows, columns: this.columns }),

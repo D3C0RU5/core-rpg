@@ -15,7 +15,7 @@ export class CharacterModel extends BaseEntity {
   @Column()
   strength!: number
 
-  mapToUser = () => {
+  mapToEntity = () => {
     return new Character({
       characterId: this.characterId,
       health: this.health,

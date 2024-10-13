@@ -19,7 +19,7 @@ export class CellModel extends BaseEntity {
   @Column()
   walkable!: boolean
 
-  mapToUser = () => {
+  mapToEntity = () => {
     return new Cell({
       cellId: this.cellId,
       gridId: this.gridId,
