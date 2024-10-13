@@ -15,11 +15,11 @@ export class CreateGridController implements Controller {
       if (!columns) {
         return badRequest(new Error('Missing columns'))
       }
-      const gridSnapshot = await this.createGrid.execute({
+      const gridId = await this.createGrid.execute({
         size: { rows, columns },
       })
 
-      return ok({ gridSnapshot })
+      return ok({ gridId })
     } catch (error) {
       return serverError(error)
     }

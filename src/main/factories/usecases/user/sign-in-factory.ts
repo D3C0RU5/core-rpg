@@ -2,7 +2,7 @@ import { SignInUseCase } from '../../../../core/usecases/user/sign-in'
 import { BcryptAdapter } from '../../../../infra/criptography/bcrypt/bcrypt-adapter'
 import { JwtAdapter } from '../../../../infra/criptography/jsonwebtoken/jwt-adapter'
 import { UserRepository } from '../../../../infra/database/typeorm/user-repository'
-import { env } from '../../../config/environment'
+import env from '../../../config/env'
 
 export const makeSignInUseCase = (): SignInUseCase => {
   const userRepository = new UserRepository()

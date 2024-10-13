@@ -9,11 +9,13 @@ import {
 export class DbCreateGridUseCase implements ICreateGridUseCase {
   constructor(private readonly gridRepository: IGridRepositoryCreate) {}
 
-  async execute(input: InputCreateGrid): Promise<void> {
+  async execute(input: InputCreateGrid): Promise<string> {
     const { rows, columns } = input.size
     const size = Size.create(rows, columns)
     const grid = Grid.create(size)
 
     await this.gridRepository.create(grid)
+
+    return grid.Id
   }
 }

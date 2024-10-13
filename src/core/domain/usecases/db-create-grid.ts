@@ -7,5 +7,5 @@ export type InputCreateGrid = {
   }
 }
 export abstract class ICreateGridUseCase implements UseCase {
-  abstract execute(input: InputCreateGrid): Promise<void>
+  abstract execute(input: InputCreateGrid): Promise<string>
 }
