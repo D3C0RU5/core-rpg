@@ -21,6 +21,7 @@ export class SignUpController implements Controller {
         throw new InvalidPropertyError('password', {
           message: 'Password not matches with confirmation',
         })
+
       await this.createUser.execute({ name, email, password })
 
       return ok()
