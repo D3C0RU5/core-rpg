@@ -12,7 +12,7 @@ export class BaseError extends Error {
     this.key = key
     this.message = message
     this.details = details
-    this.stack = new Error().stack
+    this.stack = new Error()?.stack
 
     Object.setPrototypeOf(this, BaseError.prototype)
   }

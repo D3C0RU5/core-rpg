@@ -9,7 +9,7 @@ export class Email {
   }
 
   private static validateEmail(email: string): boolean {
-    return /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(email)
+    return /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email)
   }
 
   get Value(): string {
