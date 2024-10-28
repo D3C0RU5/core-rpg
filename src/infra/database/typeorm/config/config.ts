@@ -3,6 +3,8 @@ import { DataSourceOptions } from 'typeorm'
 import { UserModel } from '../models/user'
 import { CellModel } from '../models/cell'
 import { GridModel } from '../models/grid'
+import * as dotenv from 'dotenv'
+dotenv.config()
 
 export const entities = [UserModel, CellModel, GridModel]
 
@@ -13,9 +15,8 @@ export const SqliteConfig: DataSourceOptions = {
   logging: false,
   entities,
   subscribers: [],
-  migrations: [],
+  migrations: ['src/infra/database/typeorm/migrations/*.ts'],
 }
-
 export const PostgreSqlConfig: DataSourceOptions = {
   type: 'postgres',
   host: process.env.POSTGRES_ADDRESS,
@@ -27,5 +28,5 @@ export const PostgreSqlConfig: DataSourceOptions = {
   logging: true,
   entities,
   subscribers: [],
-  migrations: [],
+  migrations: ['src/infra/database/typeorm/migrations/*.ts'],
 }

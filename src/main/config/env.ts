@@ -1,3 +1,6 @@
+import dotenv from 'dotenv'
+dotenv.config()
+
 const getEnvAsNumberOrNull = (value: string | undefined) => {
   const asNumber = Number(value)
   const isNumber = !isNaN(asNumber)

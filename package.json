@@ -4,11 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run dev:up & nodemon --config .env src/main/server.ts",
+    "dev": "nodemon src/main/server.ts",
     "test": "npx jest -c ./jest-unit.config.js --runInBand",
     "test:coverage": "npm run test -- --coverage --coverageReporters=text-summary",
     "integration:test": "npx jest -c ./jest-integration.config.js",
-    "dev:up": "docker compose -f ./docker/dev/docker-compose.yml up"
+    "dev:up": "docker compose -f ./docker/dev/docker-compose.yml --env-file .env up --build",
+    "typeorm": "ts-node ./node_modules/typeorm/cli.js",
+    "migration:generate": "npm run typeorm migration:generate -- -d src/infra/database/typeorm/config/datasource.ts -n NomeDaMigration",
+    "migration:run": "npm run typeorm migration:run -- -d src/infra/database/typeorm/config/datasource.ts",
+    "migration:revert": "npm run typeorm migration:revert -- -d src/infra/database/typeorm/config/datasource.ts",
+    "migration:show": "npm run typeorm migration:show -- -d src/infra/database/typeorm/config/datasource.ts"
   },
   "keywords": [],
   "author": "",
@@ -35,6 +40,7 @@
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.0",
