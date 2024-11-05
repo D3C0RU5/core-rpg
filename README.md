@@ -181,6 +181,17 @@ Esta API permite a criação e gerenciamento de um jogo de RPG online, onde os u
 - [ ] Pausar Jogo
 - [ ] Retomar Jogo
 
+### 8. Ações de Jogabilidade
+
+- [ ] Atacar (especificar alvo)
+- [ ] Ativar Habilidade (especificar habilidade)
+- [ ] Pular
+- [ ] Correr
+- [ ] Usar Item
+- [ ] Interagir com Objeto
+- [ ] Defender
+- [ ] Fugir
+
 ## Como Usar
 
 1. **Configuração do Ambiente**: Siga as instruções de instalação e configuração.
